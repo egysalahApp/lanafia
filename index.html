@@ -73,12 +73,10 @@
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
 
     <!-- ==========================================
-         الترويسة (Header) والتبويبات (Tabs) - ثابتة (Sticky)
+         الترويسة (Header) - تتحرك بشكل طبيعي مع الصفحة
          ========================================== -->
-    <div id="sticky-header" class="sticky top-0 z-50 bg-pastel-50/95 backdrop-blur-md border-b border-pastel-200 shadow-sm transition-all duration-300">
-        
-        <!-- الترويسة الرئيسية -->
-        <div class="py-3 text-center flex flex-col items-center justify-center space-y-1">
+    <div id="main-header" class="bg-pastel-50 pt-4 pb-2 transition-all duration-300">
+        <div class="text-center flex flex-col items-center justify-center space-y-1">
             <a href="https://www.youtube.com/egysalah" target="_blank" class="flex items-center justify-center gap-2 text-slate-900 text-2xl font-bold decoration-transparent outline-none">
                 <span>العربية السهلة</span>
                 <!-- أيقونة يوتيوب SVG نقية -->
@@ -88,9 +86,14 @@
             </a>
             <p class="text-slate-500 text-lg font-bold">محمود صلاح</p>
         </div>
+    </div>
 
+    <!-- ==========================================
+         التبويبات (Tabs) - ثابتة (Sticky) في أعلى الشاشة
+         ========================================== -->
+    <div id="sticky-tabs" class="sticky top-0 z-50 bg-pastel-50/95 backdrop-blur-md border-y border-pastel-200 shadow-sm">
         <!-- حاوية التبويبات (أفقية، التمرير آمن، بدون Hover) -->
-        <div class="relative border-t border-pastel-100">
+        <div class="relative">
             <div id="tabs-container" class="overflow-x-auto hide-scrollbar scroll-smooth py-1">
                 <!-- استخدام mx-auto w-max max-w-full px-4 لضمان التوسيط الآمن وعدم القص -->
                 <ul id="tabs-list" class="flex flex-row items-center mx-auto w-max max-w-full px-4 gap-2 no-select">
@@ -98,8 +101,8 @@
                 </ul>
             </div>
             
-            <!-- شريط التقدم النحيف (2px) أسفل التبويبات -->
-            <div class="absolute bottom-0 left-0 w-full h-[2px] bg-slate-200">
+            <!-- شريط التقدم النحيف (4px) أسفل التبويبات -->
+            <div class="absolute bottom-0 left-0 w-full h-[4px] bg-slate-200">
                 <div id="progress-bar" class="h-full bg-emerald-500 transition-all duration-500 w-0 right-0 absolute"></div>
             </div>
         </div>
@@ -212,7 +215,7 @@
                             { text: "نفي التقصير عن طالب علم واحد فقط.", correct: false },
                             { text: "النهي عن التقصير في طلب العلم.", correct: false }
                         ],
-                        explanation: "إجابة صحيحة! لا النافية للجنس تنفي الخبر (مقصر) عن جميع أفراد جنس اسمها (طالب علم) بشكل قاطع."
+                        explanation: "لا النافية للجنس تنفي الخبر (مقصر) عن جميع أفراد جنس اسمها (طالب علم) بشكل قاطع."
                     },
                     {
                         q: "عين الجملة التي تحتوي على (لا النافية للجنس):",
@@ -223,7 +226,7 @@
                             { text: "لا يكذبُ المؤمن.", correct: false },
                             { text: "المسلم لا الخائن محبوب.", correct: false }
                         ],
-                        explanation: "أحسنت! (لا) هنا دخلت على اسم نكرة (بائع) لنفي جنس الباعة المتجولين. أما في الجملة الثانية فهي نافية للفعل، وفي الثالثة حرف عطف."
+                        explanation: "(لا) هنا دخلت على اسم نكرة (بائع) لنفي جنس الباعة المتجولين. أما في الجملة الثانية فهي نافية للفعل، وفي الثالثة حرف عطف."
                     },
                     {
                         q: "هل الجملة التالية صحيحة معنويًا ونحويًا لاحتواء (لا النافية للجنس)؟\n(لا كاذبٌ محبوبٌ)",
@@ -233,7 +236,7 @@
                             { text: "صواب", correct: false },
                             { text: "خطأ", correct: true }
                         ],
-                        explanation: "إجابة صحيحة (الجملة خاطئة). الصواب: (لا كاذبَ محبوبٌ) لأن اسمها المفرد يُبنى على الفتح."
+                        explanation: "الجملة خاطئة. الصواب: (لا كاذبَ محبوبٌ) لأن اسمها المفرد يُبنى على الفتح."
                     },
                     {
                         q: "في قوله تعالى: (لا ريبَ فيه)، (لا) هنا تفيد:",
@@ -244,7 +247,7 @@
                             { text: "النهي عن الريب.", correct: false },
                             { text: "العطف.", correct: false }
                         ],
-                        explanation: "ممتاز! هي نافية للجنس واسمها (ريب) مبني على الفتح في محل نصب."
+                        explanation: "هي نافية للجنس واسمها (ريب) مبني على الفتح في محل نصب."
                     },
                     {
                         q: "الفرق بين (لا تهملْ درسك) و (لا مهملَ ناجحٌ) هو:",
@@ -255,7 +258,7 @@
                             { text: "الأولى نافية للجنس، والثانية ناهية جازمة.", correct: false },
                             { text: "كلاهما نافية للجنس.", correct: false }
                         ],
-                        explanation: "رائع! (لا تهمل) طلب ترك الفعل فهي ناهية وتجزم المضارع. (لا مهمل) تنفي النجاح عن جنس المهملين."
+                        explanation: "(لا تهمل) طلب ترك الفعل فهي ناهية وتجزم المضارع. (لا مهمل) تنفي النجاح عن جنس المهملين."
                     }
                 ]
             },
@@ -273,7 +276,7 @@
                             { text: "لأنه فصل بينها وبين اسمها فاصل.", correct: false },
                             { text: "لأنها سُبقت بحرف جر.", correct: false }
                         ],
-                        explanation: "إجابة صحيحة! من شروط عملها أن يكون اسمها وخبرها نكرتين، وهنا (الطالب) معرفة بأل، لذا يُلغى عملها ويجب تكرارها."
+                        explanation: "من شروط عملها أن يكون اسمها وخبرها نكرتين، وهنا (الطالب) معرفة بأل، لذا يُلغى عملها ويجب تكرارها."
                     },
                     {
                         q: "في جملة (لا بيننا خائنٌ)، سبب إهمال (لا) هو:",
@@ -284,7 +287,7 @@
                             { text: "اسمها معرفة.", correct: false },
                             { text: "سُبقت بحرف جر.", correct: false }
                         ],
-                        explanation: "أحسنت! الفاصل هو الظرف (بيننا) الذي تقدم على الاسم، ولذلك أهملت ووجب تكرارها (لا بيننا خائن ولا جبان)."
+                        explanation: "الفاصل هو الظرف (بيننا) الذي تقدم على الاسم، ولذلك أهملت ووجب تكرارها (لا بيننا خائن ولا جبان)."
                     },
                     {
                         q: "الجملة التالية تعرب فيها كلمة (خوف) اسمًا مجرورًا: (المؤمن شجاع بلا خوفٍ).",
@@ -294,7 +297,7 @@
                             { text: "صواب", correct: true },
                             { text: "خطأ", correct: false }
                         ],
-                        explanation: "إجابة صحيحة. دُخول حرف الجر (الباء) على (لا) يلغي عملها، وما بعدها يُعرب اسمًا مجرورًا بالباء."
+                        explanation: "دُخول حرف الجر (الباء) على (لا) يلغي عملها، وما بعدها يُعرب اسمًا مجرورًا بالباء."
                     },
                     {
                         q: "أي الجمل التالية توافرت فيها شروط عمل (لا النافية للجنس)؟",
@@ -305,7 +308,7 @@
                             { text: "لا في الدار رجلٌ.", correct: false },
                             { text: "أحب النحو بلا شك.", correct: false }
                         ],
-                        explanation: "ممتاز! الجملة الأولى مستوفية للشروط. الثانية فصل بينها وبين اسمها، والثالثة سبقت بحرف جر."
+                        explanation: "الجملة الأولى مستوفية للشروط. الثانية فصل بينها وبين اسمها، والثالثة سبقت بحرف جر."
                     },
                     {
                         q: "إذا أُلغي عمل (لا) لأن اسمها جاء معرفة، فما الحكم النحوي للجملة؟",
@@ -316,7 +319,7 @@
                             { text: "يُعرب ما بعدها مفعولًا به.", correct: false },
                             { text: "تظل عاملة ولكن اسمها يُرفع.", correct: false }
                         ],
-                        explanation: "صحيح! مثل (لا محمدٌ حاضرٌ ولا عليٌ)، محمد تعرب مبتدأ مرفوع."
+                        explanation: "مثل (لا محمدٌ حاضرٌ ولا عليٌ)، محمد تعرب مبتدأ مرفوع."
                     }
                 ]
             },
@@ -326,69 +329,81 @@
                 isSummary: false,
                 questions: [
                     {
-                        q: "في جملة (لا صانعَ سياراتٍ مهملٌ)، ما نوع اسم لا وما حكمه؟",
-                        hint: "لاحظ أن (صانع) نكرة وأضيفت لنكرة أخرى (سيارات) ولم تنون.",
+                        q: "في جملة (لا مهملَ ناجحٌ)، ما إعراب اسم لا (مهمل)؟",
+                        hint: "الاسم هنا كلمة واحدة (مفرد)، والمفرد يُبنى على ما يُنصب به.",
                         isTF: false,
                         choices: [
-                            { text: "مضاف - حكمه الإعراب (منصوب).", correct: true },
-                            { text: "شبيه بالمضاف - حكمه الإعراب (منصوب).", correct: false },
-                            { text: "مفرد - حكمه البناء.", correct: false }
+                            { text: "اسم لا مبني على الفتح في محل نصب.", correct: true },
+                            { text: "اسم لا منصوب بالفتحة.", correct: false },
+                            { text: "مبتدأ مرفوع بالضمة.", correct: false }
                         ],
-                        explanation: "إجابة صحيحة! الاسم هنا (مضاف) لأنه أُضيف إلى نكرة بعده ليكمل معناه، ويكون معربًا منصوبًا."
+                        explanation: "القاعدة: اسم لا المفرد (كلمة واحدة) يكون مبنيًا على ما يُنصب به، وهنا يُبنى على الفتح."
                     },
                     {
-                        q: "إعراب كلمة (طالبين) في جملة: (لا طالبين مقصران):",
-                        hint: "الاسم هنا كلمة واحدة، ليست مضافة ولا شبيهة بالمضاف.",
+                        q: "إعراب كلمة (مهملين) في جملة: (لا مهملين في الصف):",
+                        hint: "الاسم مفرد (لأنه كلمة واحدة ولم يضف لشيء)، وجمع المذكر السالم يُنصب بالياء.",
                         isTF: false,
                         choices: [
-                            { text: "اسم لا مبني على الياء في محل نصب لأنه مفرد.", correct: true },
-                            { text: "اسم لا منصوب بالياء لأنه مضاف.", correct: false },
-                            { text: "مبتدأ مرفوع بالألف.", correct: false }
+                            { text: "اسم لا مبني على الياء في محل نصب.", correct: true },
+                            { text: "اسم لا منصوب بالياء.", correct: false },
+                            { text: "مبتدأ مرفوع بالواو.", correct: false }
                         ],
-                        explanation: "أحسنت! نوعه (مفرد) والمفرد يُبنى على ما يُنصب به، والمثنى يُنصب بالياء، إذن مبني على الياء."
+                        explanation: "القاعدة: المفرد يُبنى على ما يُنصب به، وكلمة (مهملين) تُنصب بالياء لأنها جمع مذكر سالم، إذن تُبنى على الياء."
                     },
                     {
-                        q: "اسم (لا) الشبيه بالمضاف غالبًا ما يكون منونًا أو به نون (في المثنى والجمع) ويتصل به شيء يتمم معناه (مثل الجار والمجرور).",
-                        hint: "قارن: (لا طالبَ علمٍ) و (لا طالبًا للعلمِ).",
-                        isTF: true,
-                        choices: [
-                            { text: "صواب", correct: true },
-                            { text: "خطأ", correct: false }
-                        ],
-                        explanation: "صواب. الشبيه بالمضاف يحتاج لما يكمله، ولكنه لا يُضاف إليه إضافة حقيقية تحذف التنوين أو النون."
-                    },
-                    {
-                        q: "عيّن اسم لا ونوعه في: (لا طالعًا جبلًا خائفٌ):",
-                        hint: "الاسم منون، وبعده كلمة تكمل معناه وتعرب مفعولًا به لاسم الفاعل.",
-                        isTF: false,
-                        choices: [
-                            { text: "طالعًا - شبيه بالمضاف.", correct: true },
-                            { text: "جبلًا - مضاف.", correct: false },
-                            { text: "طالعًا - مفرد.", correct: false }
-                        ],
-                        explanation: "ممتاز! (طالعًا) اسم فاعل منون عامل، و(جبلًا) مفعول به له. هذا هو الشبيه بالمضاف وحكمه النصب."
-                    },
-                    {
-                        q: "ما التشكيل الصحيح لكلمة (معلمات) في جملة: لا معلماتِ مقصراتٌ؟",
-                        hint: "جمع المؤنث السالم ينصب وتكون علامة نصبه... والمفرد يبنى على ما ينصب به.",
+                        q: "ما التشكيل الصحيح لكلمة (مهملات) في جملة: (لا مهملاتِ ناجحاتٌ)؟",
+                        hint: "الاسم مفرد، وجمع المؤنث السالم يُنصب بالكسرة.",
                         isTF: false,
                         choices: [
                             { text: "الكسرة (مبني على الكسر في محل نصب).", correct: true },
                             { text: "الفتحة (مبني على الفتح).", correct: false },
                             { text: "الضمة (مرفوع).", correct: false }
                         ],
-                        explanation: "صحيح! اسم لا مفرد، وجمع المؤنث السالم ينصب بالكسرة، فيبنى هنا على الكسر في محل نصب."
+                        explanation: "القاعدة: المفرد يُبنى على ما يُنصب به، وجمع المؤنث السالم يُنصب بالكسرة، فيُبنى هنا على الكسر."
                     },
                     {
-                        q: "عند تحويل الجملة (لا رجلَ سوءٍ محبوبٌ) للمثنى، نقول:",
-                        hint: "الاسم هنا مضاف. ماذا يحدث لنون المثنى عند الإضافة؟",
+                        q: "في جملة (لا لاعبَ كرةٍ كسولٌ)، ما نوع اسم لا وإعرابه؟",
+                        hint: "الاسم مكون من كلمتين (لاعب كرة)، والثانية مجرورة.",
                         isTF: false,
                         choices: [
-                            { text: "لا رجُلَيْ سوءٍ محبوبان.", correct: true },
-                            { text: "لا رجلَيْن سوءٍ محبوبان.", correct: false },
-                            { text: "لا رجُلان سوءٍ محبوبان.", correct: false }
+                            { text: "مضاف - اسم لا منصوب بالفتحة.", correct: true },
+                            { text: "شبيه بالمضاف - اسم لا منصوب بالفتحة.", correct: false },
+                            { text: "مفرد - مبني على الفتح.", correct: false }
                         ],
-                        explanation: "رائع! (رجلي) اسم لا منصوب بالياء لأنه مثنى، وحذفت النون للإضافة."
+                        explanation: "القاعدة: اسم لا المضاف (كلمتان: الثانية مجرورة) يكون معربًا منصوبًا، وهنا نُصب بالفتحة."
+                    },
+                    {
+                        q: "عند تحويل الجملة السابقة لجمع المذكر لتصبح (لا لاعبي كرةٍ في الساحة)، إعراب كلمة (لاعبي):",
+                        hint: "المضاف تُحذف نونه عند الإضافة، ويُنصب بالياء إذا كان جمع مذكر سالمًا.",
+                        isTF: false,
+                        choices: [
+                            { text: "اسم لا منصوب بالياء وحُذفت النون للإضافة.", correct: true },
+                            { text: "اسم لا مبني على الياء.", correct: false },
+                            { text: "مضاف إليه مجرور بالياء.", correct: false }
+                        ],
+                        explanation: "القاعدة: المضاف منصوب، ولأنه جمع مذكر سالم نُصب بالياء، وحُذفت النون (التي في: لاعبين) بسبب الإضافة إلى كلمة (كرة)."
+                    },
+                    {
+                        q: "في جملة (لا طالبًا علمًا مقصرٌ)، إعراب كلمة (طالبًا):",
+                        hint: "الاسم منون وبعده كلمة تكمل معناه (علمًا).",
+                        isTF: false,
+                        choices: [
+                            { text: "اسم لا منصوب بالفتحة لأنه شبيه بالمضاف.", correct: true },
+                            { text: "اسم لا مبني على الفتح لأنه مفرد.", correct: false },
+                            { text: "اسم لا منصوب بالفتحة لأنه مضاف.", correct: false }
+                        ],
+                        explanation: "القاعدة: الشبيه بالمضاف يكون منصوبًا، وغالبًا ما يكون منونًا وبعده ما يكمل معناه."
+                    },
+                    {
+                        q: "عين نوع اسم لا وإعرابه في جملة (لا متقنين عملهم خاسرون):",
+                        hint: "لاحظ بقاء النون في (متقنين) ووجود كلمة بعدها تكمل المعنى.",
+                        isTF: false,
+                        choices: [
+                            { text: "شبيه بالمضاف - اسم لا منصوب بالياء.", correct: true },
+                            { text: "مضاف - اسم لا منصوب بالياء.", correct: false },
+                            { text: "مفرد - مبني على الياء.", correct: false }
+                        ],
+                        explanation: "القاعدة: الشبيه بالمضاف يُنصب بالياء في جمع المذكر السالم ولا تُحذف نونه، بل تبقى ليأتي بعدها ما يكمل المعنى."
                     }
                 ]
             },
@@ -406,7 +421,7 @@
                             { text: "ناجح.", correct: false },
                             { text: "لك.", correct: false }
                         ],
-                        explanation: "إجابة صحيحة! يُحذف خبر (لا) جوازًا إذا فُهم من السياق، ويقدر بـ (في ذلك) أو (موجود)."
+                        explanation: "يُحذف خبر (لا) جوازًا إذا فُهم من السياق، ويقدر بـ (في ذلك) أو (موجود)."
                     },
                     {
                         q: "إعراب كلمة (جدال) في التعبير الثابت (لا جدالَ):",
@@ -417,7 +432,7 @@
                             { text: "مفعول مطلق منصوب.", correct: false },
                             { text: "اسم لا منصوب بالفتحة لأنه مضاف.", correct: false }
                         ],
-                        explanation: "أحسنت! (جدال، شك، ريب، مفر، بد) غالبًا تعرب اسم لا مفرد مبني، وخبرها محذوف جوازًا."
+                        explanation: "(جدال، شك، ريب، مفر، بد) غالبًا تعرب اسم لا مفرد مبني، وخبرها محذوف جوازًا."
                     },
                     {
                         q: "يجوز حذف اسم (لا النافية للجنس) وبقاء خبرها كما في قولنا: (لا عليك).",
@@ -427,7 +442,7 @@
                             { text: "صواب", correct: true },
                             { text: "خطأ", correct: false }
                         ],
-                        explanation: "صواب. يجوز حذف الاسم إذا فُهم من السياق، والتقدير هنا: لا بأس (أو لا حرج) عليك."
+                        explanation: "يجوز حذف الاسم إذا فُهم من السياق، والتقدير هنا: لا بأس (أو لا حرج) عليك."
                     },
                     {
                         q: "الجملة (أنت غاضب بلا سببٍ). كلمة (سبب) تعرب:",
@@ -438,7 +453,7 @@
                             { text: "اسم لا مبني على الكسر.", correct: false },
                             { text: "مضافًا إليه مجرورًا.", correct: false }
                         ],
-                        explanation: "ممتاز! دخول الباء يلغي عمل (لا) فتصبح مهملة أو زائدة، وما بعدها يُجر بحرف الجر."
+                        explanation: "دخول الباء يلغي عمل (لا) فتصبح مهملة أو زائدة، وما بعدها يُجر بحرف الجر."
                     },
                     {
                         q: "في جملة (سننتصر لا محالةَ). كلمة (محالة) تُعرب:",
@@ -449,7 +464,7 @@
                             { text: "مضافًا إليه مجرورًا بالكسرة.", correct: false },
                             { text: "خبر لا مرفوعًا بالضمة.", correct: false }
                         ],
-                        explanation: "إجابة صحيحة! الكلمات (محالة، بد، شك، مفر) من الثوابت التي تُعرب اسم لا مفرد مبني على الفتح، وخبرها يكون محذوفًا تقديره (في ذلك)."
+                        explanation: "الكلمات (محالة، بد، شك، مفر) من الثوابت التي تُعرب اسم لا مفرد مبني على الفتح، وخبرها يكون محذوفًا تقديره (في ذلك)."
                     }
                 ]
             }
@@ -471,7 +486,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             initProgressObj();
             renderTabs();
-            loadSection(0);
+            // تمرير true لمنع التمرير التلقائي للأسفل عند بداية تحميل التطبيق
+            loadSection(0, true);
             setupGlobalListeners();
         });
 
@@ -491,16 +507,16 @@
         // التمرير العمودي الناعم والآمن للمحتوى
         function smoothScrollToContent() {
             requestAnimationFrame(() => {
-                const header = document.getElementById('sticky-header');
                 const contentArea = document.getElementById('content-area');
+                const stickyTabs = document.getElementById('sticky-tabs');
                 
-                if (!header || !contentArea) return;
+                if (!contentArea || !stickyTabs) return;
 
-                const headerHeight = header.offsetHeight;
+                const tabsHeight = stickyTabs.offsetHeight;
                 const rect = contentArea.getBoundingClientRect();
                 
-                // حساب المسافة بدقة مع إضافة هامش صغير 20px
-                const offsetPosition = rect.top + window.pageYOffset - headerHeight - 20;
+                // حساب المسافة بدقة مع إضافة هامش صغير 20px وطرح ارتفاع التبويبات الثابتة
+                const offsetPosition = rect.top + window.pageYOffset - tabsHeight - 20;
 
                 window.scrollTo({
                     top: offsetPosition,
@@ -700,41 +716,51 @@
 
                 // بناء كود HTML للسؤال
                 const qCard = document.createElement('div');
-                qCard.className = `bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-pastel-200'} mb-6 transition-all duration-300`;
+                qCard.className = `mb-12 transition-all duration-300`; // تم إزالة الخلفية البيضاء من الحاوية الرئيسية لفصل العناصر
                 
                 let html = `
-                    <div class="flex justify-between items-start gap-4 mb-6">
-                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed flex-grow">
+                    <!-- صندوق السؤال -->
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-pastel-200'} mb-4">
+                        
+                        <!-- الترويسة العلوية للسؤال (رقم السؤال يمين + زر التلميح يسار) -->
+                        <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-100">
+                            <span class="text-lg md:text-xl font-bold text-slate-500">السؤال ${arabicNumerals[qIndex]}</span>
+                            <button onclick="toggleHint('${qId}')" class="flex items-center gap-1 text-amber-600 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-colors border border-amber-200">
+                                <span>تلميح</span> <span class="text-lg">💡</span>
+                            </button>
+                        </div>
+
+                        <!-- نص السؤال -->
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed">
                             ${q.q}
                         </h3>
-                        <button onclick="toggleHint('${qId}')" class="flex-shrink-0 flex items-center gap-1 text-amber-500 hover:text-amber-600 bg-amber-50 px-3 py-1 rounded-full text-lg font-bold transition-colors">
-                            <span>تلميح</span> <span class="text-2xl">💡</span>
-                        </button>
                     </div>
                     
-                    <div id="hint_${qId}" class="hidden bg-amber-100 text-amber-900 p-4 rounded-xl text-lg md:text-xl text-right mb-6 border border-amber-200 fade-in">
+                    <!-- صندوق نص التلميح -->
+                    <div id="hint_${qId}" class="hidden mx-auto max-w-2xl w-full mb-6 bg-amber-100 text-amber-900 p-4 rounded-xl text-lg md:text-xl text-right border border-amber-200 fade-in shadow-sm">
                         <strong>💡 تلميح: </strong> ${q.hint}
                     </div>
 
-                    <div class="flex flex-col gap-3 mx-auto max-w-xl">
+                    <!-- صندوق الاختيارات (مستقل عن السؤال) -->
+                    <div class="flex flex-col gap-3 mx-auto max-w-xl w-full">
                 `;
 
                 displayChoices.forEach((choice, cIndex) => {
                     // الترقيم: لا ترقيم لصح/خطأ
                     const numLabel = q.isTF ? '' : `<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold ml-3 text-lg flex-shrink-0">${arabicNumerals[cIndex]}</span>`;
                     
-                    // تحديد حالة الزر إذا كان مجاباً
-                    let btnClass = "w-full text-right p-4 rounded-xl border-2 border-slate-200 text-xl md:text-2xl text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center cursor-pointer";
+                    // تحديد حالة الزر إذا كان مجاباً (تمت إضافة bg-white و shadow-sm لتبدو كصناديق منفصلة)
+                    let btnClass = "w-full text-right p-4 rounded-xl border-2 border-slate-200 bg-white shadow-sm text-xl md:text-2xl text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center cursor-pointer";
                     
                     let disabledAttr = isAnswered ? "disabled" : "";
                     
                     // إظهار الإجابة الصحيحة والخاطئة إذا كان السؤال مجاباً
                     if (isAnswered) {
-                        btnClass = "w-full text-right p-4 rounded-xl border-2 text-xl md:text-2xl flex items-center cursor-default opacity-80";
+                        btnClass = "w-full text-right p-4 rounded-xl border-2 text-xl md:text-2xl flex items-center cursor-default opacity-90 shadow-sm";
                         if (choice.correct) {
                             btnClass += " border-emerald-500 bg-emerald-100 text-emerald-900 font-bold";
                         } else {
-                            btnClass += " border-slate-200 bg-slate-50 text-slate-500";
+                            btnClass += " border-slate-200 bg-white text-slate-500";
                         }
                     }
 
@@ -748,13 +774,13 @@
 
                 html += `</div>`; // إغلاق حاوية الاختيارات
 
-                // منطقة التغذية الراجعة والشرح
+                // منطقة التغذية الراجعة والشرح (صندوق مستقل أسفل الاختيارات)
                 if (isAnswered) {
                     const feedbackTitle = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة تحتاج مراجعة';
                     const feedbackColor = isCorrect ? 'text-emerald-700 bg-emerald-100 border-emerald-200' : 'text-rose-700 bg-rose-100 border-rose-200';
                     
                     html += `
-                        <div class="mt-6 p-5 rounded-xl border ${feedbackColor} text-right fade-in">
+                        <div class="mx-auto max-w-xl w-full mt-4 p-5 rounded-xl border ${feedbackColor} text-right fade-in shadow-sm">
                             <h4 class="font-bold text-xl md:text-2xl mb-2">${feedbackTitle}</h4>
                             <p class="text-lg md:text-xl leading-relaxed">${q.explanation}</p>
                         </div>
@@ -914,9 +940,12 @@
                 // التمرير إلى النتيجة النهائية
                 setTimeout(() => {
                     requestAnimationFrame(() => {
-                        const headerHeight = document.getElementById('sticky-header').offsetHeight;
+                        const stickyTabs = document.getElementById('sticky-tabs');
+                        const tabsHeight = stickyTabs ? stickyTabs.offsetHeight : 0;
                         const rect = finalArea.getBoundingClientRect();
-                        const offsetPosition = rect.top + window.pageYOffset - headerHeight - 20;
+                        
+                        // طرح ارتفاع التبويبات الثابتة حتى لا تُغطي النتيجة
+                        const offsetPosition = rect.top + window.pageYOffset - tabsHeight - 20;
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     });
                 }, 300);
