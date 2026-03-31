@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لا النافية للجنس - العربية السهلة</title>
     
-    <!-- استدعاء خط Readex Pro من Google Fonts لدعم القراءة الواضحة (Typography) -->
+    <!-- استدعاء خط Readex Pro من Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- استدعاء Tailwind CSS عبر CDN للتصميم والتجاوب -->
+    <!-- استدعاء Tailwind CSS عبر CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- إعدادات Tailwind المخصصة -->
@@ -34,16 +34,11 @@
     </script>
 
     <style>
-        /* أنماط CSS مخصصة */
         body {
             background-color: #fdfbf7; 
             scroll-behavior: auto; 
         }
         
-        .content-section {
-            scroll-margin-top: 7rem; 
-        }
-
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -64,12 +59,42 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* حركات التلميحات (Collapsible Transition) باستخدام CSS Grid */
+        .hint-collapse {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            margin-top: 0;
+        }
+        .hint-expand {
+            display: grid;
+            grid-template-rows: 1fr;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            margin-top: 1rem;
+        }
+        .hint-inner {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* حركة التغذية الراجعة (Feedback Animation) لمنع القفز البصري */
+        @keyframes expandFeedback {
+            0% { opacity: 0; max-height: 0; transform: translateY(-10px); margin-top: 0; }
+            100% { opacity: 1; max-height: 1000px; transform: translateY(0); margin-top: 1.5rem; }
+        }
+        .feedback-anim {
+            animation: expandFeedback 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
 
     <!-- ==========================================
-         الترويسة (Header) - تتحرك بشكل طبيعي مع الصفحة
+         الترويسة (Header)
          ========================================== -->
     <div id="main-header" class="bg-pastel-50 pt-4 pb-2 transition-all duration-300">
         <div class="text-center flex flex-col items-center justify-center space-y-1">
@@ -105,7 +130,7 @@
          ========================================== -->
     <main class="flex-grow w-full px-4 py-8 pb-24">
         
-        <!-- عنوان الدرس الثابت (يظهر تحت التبويبات دائمًا) -->
+        <!-- عنوان الدرس الثابت -->
         <div id="main-lesson-title-container" class="text-center mb-10 mt-4">
             <h2 class="inline-block text-slate-800 text-3xl md:text-4xl font-extrabold">
                 لا النافية للجنس
@@ -191,7 +216,6 @@
                 id: "meaning",
                 title: "المعنى والاستخراج",
                 isSummary: false,
-                // تم تحويل هذا القسم بالكامل إلى لعبة "صياد الكلمات"
                 questions: [
                     {
                         type: "word-hunter",
@@ -239,7 +263,6 @@
                 id: "conditions",
                 title: "شروط العمل",
                 isSummary: false,
-                // تم تحويل هذا القسم إلى نشاط "تصنيف البطاقات"
                 questions: [
                     {
                         type: "card-sorting",
@@ -307,7 +330,6 @@
                 id: "types",
                 title: "أنواع الاسم وإعرابه",
                 isSummary: false,
-                // تم تحويل هذا القسم إلى نشاط "التوصيل" المتدرج
                 questions: [
                     {
                         type: "matching",
@@ -434,6 +456,7 @@
 
         function initProgressObj() {
             userProgress = {};
+            window.hintState = {}; // حفظ حالة التلميحات
             courseData.forEach(sec => {
                 if (!sec.isSummary) userProgress[sec.id] = {};
             });
@@ -577,40 +600,57 @@
                 const isAnswered = answeredState.hasOwnProperty(qIndex);
                 const isCorrect = isAnswered ? answeredState[qIndex] : null;
 
+                // حالة صندوق التلميح
+                const isHintOpen = window.hintState && window.hintState[qId];
+                const hintGridClass = isHintOpen ? 'hint-expand' : 'hint-collapse';
+
                 const qCard = document.createElement('div');
-                qCard.className = `mb-12 transition-all duration-300`; 
+                qCard.className = `mb-12`; 
                 
-                // تحديد النص في الترويسة العلوية حسب نوع النشاط
                 let activityBadge = '';
                 if (q.type === 'word-hunter') {
-                    activityBadge = `<span class="text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-base">صياد الكلمات 🎯</span>`;
+                    activityBadge = `<span class="text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-base border border-blue-100 hidden sm:inline-block">صياد الكلمات 🎯</span>`;
                 } else if (q.type === 'card-sorting') {
-                    activityBadge = `<span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full text-base">تصنيف البطاقات 🗂️</span>`;
+                    activityBadge = `<span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full text-base border border-indigo-100 hidden sm:inline-block">تصنيف البطاقات 🗂️</span>`;
                 } else if (q.type === 'matching') {
-                    activityBadge = `<span class="text-fuchsia-600 bg-fuchsia-50 px-3 py-1 rounded-full text-base">نشاط التوصيل 🔗</span>`;
+                    activityBadge = `<span class="text-fuchsia-600 bg-fuchsia-50 px-3 py-1 rounded-full text-base border border-fuchsia-100 hidden sm:inline-block">نشاط التوصيل 🔗</span>`;
                 }
 
+                // بناء ترويسة وسؤال صندوق كل سؤال
                 let html = `
-                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-pastel-200'} mb-4">
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/20' : 'border-rose-300 bg-rose-50/20') : 'border-pastel-200'} mb-4 transition-colors duration-300">
+                        
+                        <!-- الترويسة العلوية: رقم السؤال والتلميح -->
                         <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-100">
-                            <span class="text-lg md:text-xl font-bold text-slate-500">السؤال ${arabicNumerals[qIndex]} ${activityBadge}</span>
-                            <button onclick="toggleHint('${qId}')" class="flex items-center gap-1 text-amber-600 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-colors border border-amber-200">
+                            <div class="flex items-center gap-3">
+                                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 text-slate-700 font-bold text-lg md:text-xl shadow-sm border border-slate-200">
+                                    ${arabicNumerals[qIndex]}
+                                </span>
+                                ${activityBadge}
+                            </div>
+                            <button onclick="toggleHint('${qId}')" class="flex items-center gap-1 text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-4 py-2 rounded-full text-sm md:text-base font-bold transition-colors border border-amber-200 shadow-sm">
                                 <span>تلميح</span> <span class="text-lg">💡</span>
                             </button>
                         </div>
-                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed">
+                        
+                        <!-- نص السؤال -->
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed mb-2">
                             ${q.q}
                         </h3>
-                    </div>
-                    
-                    <div id="hint_${qId}" class="hidden mx-auto max-w-2xl w-full mb-6 bg-amber-100 text-amber-900 p-4 rounded-xl text-lg md:text-xl text-right border border-amber-200 fade-in shadow-sm">
-                        <strong>💡 تلميح: </strong> ${q.hint}
+                        
+                        <!-- صندوق التلميح القابل للطي أسفل السؤال -->
+                        <div id="hint_wrapper_${qId}" class="${hintGridClass}">
+                            <div class="hint-inner">
+                                <div class="bg-amber-50 text-amber-900 p-4 rounded-xl text-lg md:text-xl text-right border border-amber-200 shadow-sm">
+                                    <strong>💡 تلميح: </strong> ${q.hint}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `;
 
                 // بناء واجهة الإجابات بناءً على نوع النشاط
                 if (q.type === 'word-hunter') {
-                    // واجهة لعبة "صياد الكلمات"
                     html += `<div class="mx-auto max-w-2xl w-full text-center bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6 leading-loose text-2xl md:text-3xl" dir="rtl">`;
                     
                     q.words.forEach((word, wIndex) => {
@@ -633,7 +673,6 @@
                     
                     html += `</div>`;
                 } else if (q.type === 'card-sorting') {
-                    // واجهة لعبة "تصنيف البطاقات"
                     html += `
                         <div class="flex justify-center my-6 fade-in px-2">
                             <div class="bg-indigo-50 border-4 border-indigo-200 text-indigo-900 px-8 py-10 rounded-3xl shadow-md text-2xl md:text-3xl font-bold text-center w-full max-w-lg relative overflow-hidden">
@@ -642,14 +681,13 @@
                                 ${q.cardText}
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto max-w-4xl w-full mt-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto max-w-4xl w-full mt-6 mb-4">
                     `;
                     
                     let displayChoices = [...q.choices];
                     if (!q.isTF) displayChoices = shuffleArray(displayChoices);
 
                     displayChoices.forEach((choice, cIndex) => {
-                        // تصميم صناديق الإسقاط (Bins)
                         let btnClass = "w-full text-center p-5 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-sm text-xl md:text-2xl text-slate-700 hover:border-indigo-400 hover:bg-indigo-50 hover:border-solid hover:-translate-y-1 transition-all cursor-pointer font-bold";
                         let disabledAttr = isAnswered ? "disabled" : "";
                         
@@ -667,8 +705,7 @@
                     });
                     html += `</div>`;
                 } else if (q.type === 'matching') {
-                    // واجهة لعبة "نشاط التوصيل"
-                    html += `<div class="mx-auto w-full max-w-4xl mt-6">`;
+                    html += `<div class="mx-auto w-full max-w-4xl mt-6 mb-4">`;
                     
                     let rightItems = q.pairs.map((p, i) => ({ text: p.right, pairId: i }));
                     let leftItems = q.pairs.map((p, i) => ({ text: p.left, pairId: i }));
@@ -715,11 +752,11 @@
                     }
                     html += `</div>`;
                 } else {
-                    // واجهة الاختيار المتعدد الافتراضية
                     let displayChoices = [...q.choices];
                     if (!q.isTF) displayChoices = shuffleArray(displayChoices);
 
-                    html += `<div class="flex flex-col gap-3 mx-auto max-w-xl w-full">`;
+                    // استخدام max-w-lg بدلاً من max-w-xl لضمان عدم تمدد الأزرار بشكل مبالغ فيه
+                    html += `<div class="flex flex-col gap-3 mx-auto max-w-lg w-full mb-4">`;
                     displayChoices.forEach((choice, cIndex) => {
                         const numLabel = q.isTF ? '' : `<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold ml-3 text-lg flex-shrink-0">${arabicNumerals[cIndex]}</span>`;
                         let btnClass = "w-full text-right p-4 rounded-xl border-2 border-slate-200 bg-white shadow-sm text-xl md:text-2xl text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center cursor-pointer";
@@ -741,12 +778,18 @@
                     html += `</div>`;
                 }
 
-                // صندوق التغذية الراجعة
+                // صندوق التغذية الراجعة بانتقال سلس (Feedback Animation)
                 if (isAnswered) {
-                    const feedbackColor = isCorrect ? 'text-emerald-700 bg-emerald-100 border-emerald-200' : 'text-rose-700 bg-rose-100 border-rose-200';
+                    const feedbackTitle = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة خاطئة';
+                    const feedbackColor = isCorrect ? 'text-emerald-800 bg-emerald-50 border-emerald-300' : 'text-rose-800 bg-rose-50 border-rose-300';
+                    
+                    // استخدام max-w-lg ليتناسق تماماً مع عرض أزرار الخيارات أعلاه
                     html += `
-                        <div class="mx-auto max-w-xl w-full mt-4 p-5 rounded-xl border ${feedbackColor} text-right fade-in shadow-sm">
-                            <p class="text-lg md:text-xl leading-relaxed">${q.explanation}</p>
+                        <div class="mx-auto w-full max-w-lg feedback-anim">
+                            <div class="p-6 rounded-xl border-2 ${feedbackColor} text-right shadow-sm">
+                                <h4 class="font-bold text-xl md:text-2xl mb-3">${feedbackTitle}</h4>
+                                <p class="text-lg md:text-xl leading-relaxed opacity-90 text-slate-800">${q.explanation}</p>
+                            </div>
                         </div>
                     `;
                 }
@@ -758,10 +801,23 @@
             if (isSectionCompleted(section.id)) showSectionResult(section);
         }
 
-        function toggleHint(qId) {
-            const hintDiv = document.getElementById(`hint_${qId}`);
-            if (hintDiv.classList.contains('hidden')) hintDiv.classList.remove('hidden');
-            else hintDiv.classList.add('hidden');
+        // دالة التبديل السلس لصندوق التلميحات
+        window.toggleHint = function(qId) {
+            if (!window.hintState) window.hintState = {};
+            const wrapper = document.getElementById(`hint_wrapper_${qId}`);
+            const isOpen = window.hintState[qId];
+            
+            if (isOpen) {
+                // إغلاق التلميح
+                wrapper.classList.remove('hint-expand');
+                wrapper.classList.add('hint-collapse');
+                window.hintState[qId] = false;
+            } else {
+                // فتح التلميح
+                wrapper.classList.remove('hint-collapse');
+                wrapper.classList.add('hint-expand');
+                window.hintState[qId] = true;
+            }
         }
 
         // دالة التحكم في نشاط التوصيل
@@ -771,26 +827,21 @@
 
             let state = window.matchState[qId];
 
-            // إلغاء التحديد إذا تم النقر على نفس الزر
             if (state[side] && state[side].btn === btn) {
                 btn.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
                 state[side] = null;
                 return;
             }
 
-            // إزالة التحديد السابق من نفس العمود
             if (state[side]) {
                 state[side].btn.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
             }
 
-            // تحديد الزر الجديد
             btn.classList.add('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
             state[side] = { btn: btn, pairId: pairId };
 
-            // التحقق من التطابق عند اختيار زر من كل عمود
             if (state.right && state.left) {
                 if (state.right.pairId === state.left.pairId) {
-                    // تطابق صحيح!
                     [state.right.btn, state.left.btn].forEach(b => {
                         b.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50', 'hover:border-fuchsia-400', 'hover:bg-fuchsia-50', 'cursor-pointer', 'border-slate-300');
                         b.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'opacity-90');
@@ -801,12 +852,15 @@
                     state.right = null;
                     state.left = null;
 
-                    // إذا اكتملت جميع التوصيلات يتم إنهاء السؤال بنجاح
                     if (state.matchedCount === totalPairs) {
+                        // إغلاق التلميح تلقائياً عند الإجابة مع السماح بفتحه لاحقاً
+                        const currentQId = `q_${sectionId}_${qIndex}`;
+                        if (!window.hintState) window.hintState = {};
+                        window.hintState[currentQId] = false; 
+
                         setTimeout(() => handleAnswer(sectionId, qIndex, true), 600);
                     }
                 } else {
-                    // تطابق خاطئ!
                     let rBtn = state.right.btn;
                     let lBtn = state.left.btn;
                     
@@ -818,7 +872,6 @@
                     state.right = null;
                     state.left = null;
 
-                    // إزالة اللون الأحمر بعد ثانية للعودة للمحاولة
                     setTimeout(() => {
                         [rBtn, lBtn].forEach(b => {
                             b.classList.remove('bg-rose-100', 'border-rose-500', 'text-rose-900');
@@ -829,6 +882,11 @@
         }
 
         window.handleAnswer = function(sectionId, qIndex, isCorrect) {
+            // إغلاق التلميح تلقائياً عند الإجابة مع السماح بإعادة فتحه لاحقاً
+            const qId = `q_${sectionId}_${qIndex}`;
+            if (!window.hintState) window.hintState = {};
+            window.hintState[qId] = false;
+
             if (!userProgress[sectionId]) userProgress[sectionId] = {};
             userProgress[sectionId][qIndex] = isCorrect;
             const secIndex = courseData.findIndex(s => s.id === sectionId);
@@ -845,7 +903,7 @@
                 const secId = courseData[currentSectionIndex].id;
                 userProgress[secId] = {}; 
                 loadSection(currentSectionIndex, true); 
-                smoothScrollToContent(); // التمرير لأعلى القسم عند إعادة المحاولة
+                smoothScrollToContent(); 
             });
             document.getElementById('btn-restart-all').addEventListener('click', () => {
                 initProgressObj();
