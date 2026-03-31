@@ -433,7 +433,13 @@
 
         const arabicNumerals = ['١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', '١٠'];
 
+        // منع المتصفح من الاحتفاظ بموضع التمرير عند تحديث الصفحة
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0); // إجبار الصفحة على البدء من الأعلى دائمًا
             initProgressObj();
             renderTabs();
             loadSection(0, true);
