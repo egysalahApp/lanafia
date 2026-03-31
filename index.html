@@ -34,18 +34,16 @@
     </script>
 
     <style>
-        /* أنماط CSS مخصصة للأمور التي يصعب التعامل معها بـ Tailwind فقط */
+        /* أنماط CSS مخصصة */
         body {
-            background-color: #fdfbf7; /* خلفية باستيل هادئة جداً */
-            /* تطبيق خاصية scroll-margin-top كقيمة احتياطية (Fallback) للروابط الداخلية */
-            scroll-behavior: auto; /* منع التعارض مع JS scrolling */
+            background-color: #fdfbf7; 
+            scroll-behavior: auto; 
         }
         
         .content-section {
             scroll-margin-top: 7rem; 
         }
 
-        /* إخفاء شريط التمرير الأفقي للتبويبات مع الحفاظ على وظيفة التمرير */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -54,13 +52,11 @@
             scrollbar-width: none;
         }
 
-        /* منع التحديد العشوائي للنصوص في الأزرار */
         .no-select {
             user-select: none;
             -webkit-user-select: none;
         }
 
-        /* تأثيرات انتقالية سلسة */
         .fade-in {
             animation: fadeIn 0.4s ease-in-out;
         }
@@ -79,7 +75,6 @@
         <div class="text-center flex flex-col items-center justify-center space-y-1">
             <a href="https://www.youtube.com/egysalah" target="_blank" class="flex items-center justify-center gap-2 text-slate-900 text-2xl font-bold decoration-transparent outline-none">
                 <span>العربية السهلة</span>
-                <!-- أيقونة يوتيوب SVG نقية -->
                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="#FF0000" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
@@ -89,19 +84,16 @@
     </div>
 
     <!-- ==========================================
-         التبويبات (Tabs) - ثابتة (Sticky) في أعلى الشاشة
+         التبويبات (Tabs) - ثابتة (Sticky)
          ========================================== -->
     <div id="sticky-tabs" class="sticky top-0 z-50 bg-pastel-50/95 backdrop-blur-md border-y border-pastel-200 shadow-sm">
-        <!-- حاوية التبويبات (أفقية، التمرير آمن، بدون Hover) -->
         <div class="relative">
             <div id="tabs-container" class="overflow-x-auto hide-scrollbar scroll-smooth py-1">
-                <!-- استخدام mx-auto w-max max-w-full px-4 لضمان التوسيط الآمن وعدم القص -->
                 <ul id="tabs-list" class="flex flex-row items-center mx-auto w-max max-w-full px-4 gap-2 no-select">
-                    <!-- سيتم حقن التبويبات هنا عبر JS -->
+                    <!-- سيتم حقن التبويبات هنا -->
                 </ul>
             </div>
-            
-            <!-- شريط التقدم النحيف (4px) أسفل التبويبات -->
+            <!-- شريط التقدم -->
             <div class="absolute bottom-0 left-0 w-full h-[4px] bg-slate-200">
                 <div id="progress-bar" class="h-full bg-emerald-500 transition-all duration-500 w-0 right-0 absolute"></div>
             </div>
@@ -109,22 +101,21 @@
     </div>
 
     <!-- ==========================================
-         المحتوى الرئيسي (Main Content)
+         المحتوى الرئيسي
          ========================================== -->
     <main class="flex-grow w-full px-4 py-8 pb-24">
         
-        <!-- عنوان القسم النشط يتوسط الصفحة دائمًا -->
-        <div class="text-center mb-8">
-            <h1 id="section-title" class="text-2xl md:text-3xl font-bold text-slate-800 mb-2 fade-in"></h1>
-            <p id="section-subtitle" class="text-xl text-slate-500 fade-in"></p>
+        <!-- عنوان الدرس الثابت (يظهر تحت التبويبات دائمًا) -->
+        <div id="main-lesson-title-container" class="text-center mb-10 mt-4">
+            <h2 class="inline-block text-slate-800 text-3xl md:text-4xl font-extrabold">
+                لا النافية للجنس
+            </h2>
         </div>
 
-        <!-- حاوية عرض المحتوى (الملخص أو الأسئلة) -->
         <div id="content-area" class="w-full max-w-4xl mx-auto content-section fade-in">
-            <!-- سيتم حقن المحتوى هنا -->
+            <!-- المحتوى -->
         </div>
 
-        <!-- أزرار التنقل السفلية (إعادة المحاولة / القسم التالي) -->
         <div id="navigation-buttons" class="max-w-xl mx-auto mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center hidden fade-in">
             <button id="btn-retry" class="w-full sm:w-auto px-6 py-3 bg-white border-2 border-slate-300 text-slate-700 font-bold rounded-xl active:bg-slate-100 transition-colors text-xl">
                 إعادة المحاولة 🔄
@@ -134,7 +125,6 @@
             </button>
         </div>
 
-        <!-- منطقة النتيجة الإجمالية (تظهر في النهاية) -->
         <div id="final-result-area" class="max-w-2xl mx-auto mt-16 p-8 bg-white rounded-2xl shadow-lg border border-emerald-100 hidden fade-in text-center">
             <h2 class="text-3xl font-bold text-slate-800 mb-4">🎉 اكتملت المهمة بنجاح!</h2>
             <p id="final-message" class="text-xl text-slate-600 mb-6 leading-relaxed"></p>
@@ -146,9 +136,6 @@
 
     </main>
 
-    <!-- ==========================================
-         التذييل (Footer)
-         ========================================== -->
     <footer class="bg-slate-100 py-6 border-t border-slate-200 mt-auto">
         <div class="text-center px-4">
             <a href="https://www.youtube.com/egysalah" target="_blank" class="text-slate-400 text-sm font-medium decoration-transparent outline-none">
@@ -158,12 +145,11 @@
     </footer>
 
     <!-- ==========================================
-         الكود البرمجي (JavaScript Logic)
+         الكود البرمجي
          ========================================== -->
     <script>
         /**
-         * 1. هيكل البيانات (Data Structure)
-         * يتضمن جميع الأقسام، الشرح، والأسئلة لدرس "لا النافية للجنس"
+         * 1. هيكل البيانات
          */
         const courseData = [
             {
@@ -205,60 +191,47 @@
                 id: "meaning",
                 title: "المعنى والاستخراج",
                 isSummary: false,
+                // تم تحويل هذا القسم بالكامل إلى لعبة "صياد الكلمات"
                 questions: [
                     {
-                        q: "ما الدلالة المعنوية لـ (لا النافية للجنس) في الجملة: (لا طالبَ علمٍ مقصرٌ)؟",
-                        hint: "تأمل هل النفي لشخص واحد أم للنوع كله.",
-                        isTF: false,
-                        choices: [
-                            { text: "نفي التقصير عن جميع طلاب العلم بلا استثناء.", correct: true },
-                            { text: "نفي التقصير عن طالب علم واحد فقط.", correct: false },
-                            { text: "النهي عن التقصير في طلب العلم.", correct: false }
-                        ],
-                        explanation: "لا النافية للجنس تنفي الخبر (مقصر) عن جميع أفراد جنس اسمها (طالب علم) بشكل قاطع."
+                        type: "word-hunter",
+                        q: "تحتوي الجملة على (لا) الناهية و(لا) النافية للجنس، انقر على النافية للجنس فقط:",
+                        hint: "النافية للجنس يأتي بعدها اسم نكرة وتؤسس جملة جديدة، أما الناهية فتدخل على الفعل المضارع وتفيد الطلب.",
+                        words: ["لا", "تصاحب", "الكاذب؛", "لا", "كاذبَ", "مؤتمن."],
+                        correctIndex: 3,
+                        explanation: "(لا) الثانية هي النافية للجنس لأنها دخلت على اسم نكرة (كاذب). أما الأولى فهي ناهية وتجزم الفعل المضارع."
                     },
                     {
-                        q: "عين الجملة التي تحتوي على (لا النافية للجنس):",
-                        hint: "ابحث عن (لا) التي دخلت على اسم نكرة ونفت عنه الخبر تمامًا.",
-                        isTF: false,
-                        choices: [
-                            { text: "لا بائعَ متجولٌ في الحي.", correct: true },
-                            { text: "لا يكذبُ المؤمن.", correct: false },
-                            { text: "المسلم لا الخائن محبوب.", correct: false }
-                        ],
-                        explanation: "(لا) هنا دخلت على اسم نكرة (بائع) لنفي جنس الباعة المتجولين. أما في الجملة الثانية فهي نافية للفعل، وفي الثالثة حرف عطف."
+                        type: "word-hunter",
+                        q: "استخرج (اسم لا) النافية للجنس بالنقر عليه:",
+                        hint: "الاسم الذي يقع بعد (لا) مباشرة ويتم نفي جنسه.",
+                        words: ["لا", "طالبَ", "علمٍ", "مقصرٌ."],
+                        correctIndex: 1,
+                        explanation: "كلمة (طالب) هي اسم لا، وقد نفت الجملة التقصير عن جميع طلاب العلم."
                     },
                     {
-                        q: "هل الجملة التالية صحيحة معنويًا ونحويًا لاحتواء (لا النافية للجنس)؟\n(لا كاذبٌ محبوبٌ)",
-                        hint: "تذكر أن اسم لا النافية للجنس العاملة لا يكون مرفوعًا في حال الإفراد.",
-                        isTF: true,
-                        choices: [
-                            { text: "صواب", correct: false },
-                            { text: "خطأ", correct: true }
-                        ],
-                        explanation: "الجملة خاطئة. الصواب: (لا كاذبَ محبوبٌ) لأن اسمها المفرد يُبنى على الفتح."
+                        type: "word-hunter",
+                        q: "أين (خبر لا) النافية للجنس في هذه الجملة؟ انقر عليه:",
+                        hint: "الخبر هو الكلمة التي تم نفيها عن جنس الاسم (ويكون نكرة مرفوعًا غالبًا).",
+                        words: ["لا", "ناجحَ", "مهملٌ."],
+                        correctIndex: 2,
+                        explanation: "كلمة (مهملٌ) هي الخبر، والمعنى أنه تم نفي الإهمال عن جنس الناجحين."
                     },
                     {
-                        q: "في قوله تعالى: (لا ريبَ فيه)، (لا) هنا تفيد:",
-                        hint: "القرآن الكريم يستخدمها لنفي الشك تمامًا عن الكتاب.",
-                        isTF: false,
-                        choices: [
-                            { text: "نفي جنس الريب (الشك) نفيًا قاطعًا.", correct: true },
-                            { text: "النهي عن الريب.", correct: false },
-                            { text: "العطف.", correct: false }
-                        ],
-                        explanation: "هي نافية للجنس واسمها (ريب) مبني على الفتح في محل نصب."
+                        type: "word-hunter",
+                        q: "الجملة تحوي حرفي (لا)، صِد (لا) النافية للجنس العاملة بالنقر عليها:",
+                        hint: "النافية للجنس تدخل على الأسماء النكرات وليس الأفعال.",
+                        words: ["المؤمن", "لا", "يكذب،", "ولا", "خائن", "بيننا."],
+                        correctIndex: 3,
+                        explanation: "كلمة (ولا) الثانية هي النافية للجنس لأنها دخلت على اسم نكرة (خائن). أما الأولى فهي نافية للفعل."
                     },
                     {
-                        q: "الفرق بين (لا تهملْ درسك) و (لا مهملَ ناجحٌ) هو:",
-                        hint: "الأولى بها طلب، والثانية بها إخبار ونفي.",
-                        isTF: false,
-                        choices: [
-                            { text: "الأولى ناهية جازمة، والثانية نافية للجنس.", correct: true },
-                            { text: "الأولى نافية للجنس، والثانية ناهية جازمة.", correct: false },
-                            { text: "كلاهما نافية للجنس.", correct: false }
-                        ],
-                        explanation: "(لا تهمل) طلب ترك الفعل فهي ناهية وتجزم المضارع. (لا مهمل) تنفي النجاح عن جنس المهملين."
+                        type: "word-hunter",
+                        q: "حدد (اسم لا) في قوله تعالى بالنقر عليه:",
+                        hint: "الاسم النكرة المنصوب (أو المبني على الفتح) بعد (لا).",
+                        words: ["ذَٰلِكَ", "الْكِتَابُ", "لا", "رَيْبَ", "فِيهِ."],
+                        correctIndex: 3,
+                        explanation: "كلمة (رَيْبَ) هي اسم لا مبني على الفتح، والقرآن ينفي الشك تمامًا عن الكتاب."
                     }
                 ]
             },
@@ -266,60 +239,67 @@
                 id: "conditions",
                 title: "شروط العمل",
                 isSummary: false,
+                // تم تحويل هذا القسم إلى نشاط "تصنيف البطاقات"
                 questions: [
                     {
-                        q: "لماذا أُلغي عمل (لا) في جملة: (لا الطالبُ مهملٌ ولا الطالبةُ)؟",
-                        hint: "انظر إلى الحالة التعريفية للاسم (الطالب).",
-                        isTF: false,
+                        type: "card-sorting",
+                        q: "صنف البطاقة التالية: هل (لا) فيها عاملة أم ملغاة؟",
+                        cardText: "لا الطالبُ مهملٌ ولا الطالبةُ",
+                        hint: "انظر إلى الحالة التعريفية للاسم (الطالب)، هل هو نكرة أم معرفة؟",
                         choices: [
-                            { text: "لأن اسمها معرفة.", correct: true },
-                            { text: "لأنه فصل بينها وبين اسمها فاصل.", correct: false },
-                            { text: "لأنها سُبقت بحرف جر.", correct: false }
+                            { text: "عاملة (مستوفية الشروط)", correct: false },
+                            { text: "مُلغاة (اسمها معرفة)", correct: true },
+                            { text: "مُلغاة (سُبقت بحرف جر)", correct: false }
                         ],
                         explanation: "من شروط عملها أن يكون اسمها وخبرها نكرتين، وهنا (الطالب) معرفة بأل، لذا يُلغى عملها ويجب تكرارها."
                     },
                     {
-                        q: "في جملة (لا بيننا خائنٌ)، سبب إهمال (لا) هو:",
-                        hint: "أين اسم (لا)؟ وأين خبرها؟ هل جاء الاسم مباشرة بعد (لا)؟",
-                        isTF: false,
+                        type: "card-sorting",
+                        q: "صنف البطاقة التالية في الصندوق الصحيح:",
+                        cardText: "لا بيننا خائنٌ ولا جبان.",
+                        hint: "أين اسم (لا)؟ وأين خبرها؟ هل جاء الاسم مباشرة بعد (لا) أم هناك فاصل؟",
                         choices: [
-                            { text: "فُصل بينها وبين اسمها (خائن) بفاصل (بيننا).", correct: true },
-                            { text: "اسمها معرفة.", correct: false },
-                            { text: "سُبقت بحرف جر.", correct: false }
+                            { text: "عاملة (مستوفية الشروط)", correct: false },
+                            { text: "مُلغاة (اسمها معرفة)", correct: false },
+                            { text: "مُلغاة (يوجد فاصل)", correct: true }
                         ],
                         explanation: "الفاصل هو الظرف (بيننا) الذي تقدم على الاسم، ولذلك أهملت ووجب تكرارها (لا بيننا خائن ولا جبان)."
                     },
                     {
-                        q: "الجملة التالية تعرب فيها كلمة (خوف) اسمًا مجرورًا: (المؤمن شجاع بلا خوفٍ).",
-                        hint: "تأمل الحرف الذي يسبق كلمة (لا).",
-                        isTF: true,
+                        type: "card-sorting",
+                        q: "اقرأ البطاقة، ثم صنف حالة (لا) فيها:",
+                        cardText: "المؤمن شجاع بلا خوفٍ",
+                        hint: "تأمل الحرف الذي يسبق كلمة (لا) مباشرة.",
                         choices: [
-                            { text: "صواب", correct: true },
-                            { text: "خطأ", correct: false }
+                            { text: "عاملة (مستوفية الشروط)", correct: false },
+                            { text: "مُلغاة (سُبقت بحرف جر)", correct: true },
+                            { text: "مُلغاة (يوجد فاصل)", correct: false }
                         ],
                         explanation: "دُخول حرف الجر (الباء) على (لا) يلغي عملها، وما بعدها يُعرب اسمًا مجرورًا بالباء."
                     },
                     {
-                        q: "أي الجمل التالية توافرت فيها شروط عمل (لا النافية للجنس)؟",
-                        hint: "ابحث عن: نكرة، لا فاصل، لا حرف جر قبلها.",
-                        isTF: false,
+                        type: "card-sorting",
+                        q: "أين تضع هذه البطاقة؟",
+                        cardText: "لا صانعَ معروفٍ مذمومٌ",
+                        hint: "ابحث عن الشروط: اسمها نكرة، لا يوجد فاصل، لم تسبق بحرف جر.",
                         choices: [
-                            { text: "لا صانعَ معروفٍ مذمومٌ.", correct: true },
-                            { text: "لا في الدار رجلٌ.", correct: false },
-                            { text: "أحب النحو بلا شك.", correct: false }
+                            { text: "عاملة (مستوفية الشروط)", correct: true },
+                            { text: "مُلغاة (اسمها معرفة)", correct: false },
+                            { text: "مُلغاة (يوجد فاصل)", correct: false }
                         ],
-                        explanation: "الجملة الأولى مستوفية للشروط. الثانية فصل بينها وبين اسمها، والثالثة سبقت بحرف جر."
+                        explanation: "الجملة مستوفية لجميع الشروط: الاسم (صانع) نكرة، ولا يوجد فاصل، ولم تسبق بحرف جر."
                     },
                     {
-                        q: "إذا أُلغي عمل (لا) لأن اسمها جاء معرفة، فما الحكم النحوي للجملة؟",
-                        hint: "تذكر ماذا نفعل عندما نقول (لا الشمس ينبغي لها...)",
-                        isTF: false,
+                        type: "card-sorting",
+                        q: "صنف هذه الآية الكريمة:",
+                        cardText: "لا الشَّمْسُ يَنبَغِي لَهَا أَن تُدْرِكَ الْقَمَرَ",
+                        hint: "انظر إلى كلمة (الشمس)، هل هي معرفة أم نكرة؟",
                         choices: [
-                            { text: "يُعرب ما بعدها مبتدأ، ويجب تكرار (لا).", correct: true },
-                            { text: "يُعرب ما بعدها مفعولًا به.", correct: false },
-                            { text: "تظل عاملة ولكن اسمها يُرفع.", correct: false }
+                            { text: "عاملة (مستوفية الشروط)", correct: false },
+                            { text: "مُلغاة (اسمها معرفة)", correct: true },
+                            { text: "مُلغاة (سُبقت بحرف جر)", correct: false }
                         ],
-                        explanation: "مثل (لا محمدٌ حاضرٌ ولا عليٌ)، محمد تعرب مبتدأ مرفوع."
+                        explanation: "أُلغي عمل (لا) لأن اسمها (الشمس) جاء معرفة (مُعرّف بـ أل)، وتعرب الشمس مبتدأ مرفوع."
                     }
                 ]
             },
@@ -327,83 +307,51 @@
                 id: "types",
                 title: "أنواع الاسم وإعرابه",
                 isSummary: false,
+                // تم تحويل هذا القسم إلى نشاط "التوصيل" المتدرج
                 questions: [
                     {
-                        q: "في جملة (لا مهملَ ناجحٌ)، ما إعراب اسم لا (مهمل)؟",
-                        hint: "الاسم هنا كلمة واحدة (مفرد)، والمفرد يُبنى على ما يُنصب به.",
-                        isTF: false,
-                        choices: [
-                            { text: "اسم لا مبني على الفتح في محل نصب.", correct: true },
-                            { text: "اسم لا منصوب بالفتحة.", correct: false },
-                            { text: "مبتدأ مرفوع بالضمة.", correct: false }
+                        type: "matching",
+                        q: "صل كل جملة بنوع (اسم لا) المناسب لها:",
+                        hint: "تذكر: المفرد (كلمة واحدة)، المضاف (كلمتان الثانية مجرورة)، الشبيه (منون/به نون وبعده ما يكمله).",
+                        pairs: [
+                            { right: "لا مهملَ ناجحٌ", left: "اسم لا مفرد" },
+                            { right: "لا لاعبَ كرةٍ كسولٌ", left: "اسم لا مضاف" },
+                            { right: "لا طالبًا علمًا مقصرٌ", left: "اسم لا شبيه بالمضاف" }
                         ],
-                        explanation: "القاعدة: اسم لا المفرد (كلمة واحدة) يكون مبنيًا على ما يُنصب به، وهنا يُبنى على الفتح."
+                        explanation: "المفرد يبنى على ما ينصب به. أما المضاف والشبيه بالمضاف فيكونان معربين منصوبين دائمًا."
                     },
                     {
-                        q: "إعراب كلمة (مهملين) في جملة: (لا مهملين في الصف):",
-                        hint: "الاسم مفرد (لأنه كلمة واحدة ولم يضف لشيء)، وجمع المذكر السالم يُنصب بالياء.",
-                        isTF: false,
-                        choices: [
-                            { text: "اسم لا مبني على الياء في محل نصب.", correct: true },
-                            { text: "اسم لا منصوب بالياء.", correct: false },
-                            { text: "مبتدأ مرفوع بالواو.", correct: false }
+                        type: "matching",
+                        q: "صل كل نوع من أنواع (اسم لا) بالقاعدة الإعرابية الخاصة به:",
+                        hint: "المفرد يبنى، والمضاف والشبيه ينصبان، لكن لاحظ الفرق في النون والتنوين.",
+                        pairs: [
+                            { right: "المفرد", left: "يُبنى على ما يُنصب به" },
+                            { right: "المضاف", left: "معرب منصوب ولا يُنوّن (تحذف نونه)" },
+                            { right: "الشبيه بالمضاف", left: "معرب منصوب ويُنوّن (تبقى نونه)" }
                         ],
-                        explanation: "القاعدة: المفرد يُبنى على ما يُنصب به، وكلمة (مهملين) تُنصب بالياء لأنها جمع مذكر سالم، إذن تُبنى على الياء."
+                        explanation: "المضاف تحذف نونه وتنوينه للإضافة، بينما الشبيه بالمضاف لا يضاف إضافة حقيقية فتبقى نونه وتنوينه."
                     },
                     {
-                        q: "ما التشكيل الصحيح لكلمة (مهملات) في جملة: (لا مهملاتِ ناجحاتٌ)؟",
-                        hint: "الاسم مفرد، وجمع المؤنث السالم يُنصب بالكسرة.",
-                        isTF: false,
-                        choices: [
-                            { text: "الكسرة (مبني على الكسر في محل نصب).", correct: true },
-                            { text: "الفتحة (مبني على الفتح).", correct: false },
-                            { text: "الضمة (مرفوع).", correct: false }
+                        type: "matching",
+                        q: "صل (اسم لا) في حالة الجمع بإعرابه الصحيح:",
+                        hint: "حدد أولاً هل هو (مفرد، مضاف، شبيه بالمضاف) ثم طبق القاعدة.",
+                        pairs: [
+                            { right: "لا مهملين في الصف", left: "مبني على الياء (مفرد)" },
+                            { right: "لا لاعبي كرةٍ في الساحة", left: "منصوب بالياء وحذفت النون (مضاف)" },
+                            { right: "لا متقنين عملهم خاسرون", left: "منصوب بالياء وبقيت النون (شبيه بالمضاف)" }
                         ],
-                        explanation: "القاعدة: المفرد يُبنى على ما يُنصب به، وجمع المؤنث السالم يُنصب بالكسرة، فيُبنى هنا على الكسر."
+                        explanation: "(مهملين) مفرد فبُني على الياء. (لاعبي) مضاف فنُصب بالياء وحذفت نونه. (متقنين) شبيه بالمضاف فنُصب بالياء وبقيت نونه."
                     },
                     {
-                        q: "في جملة (لا لاعبَ كرةٍ كسولٌ)، ما نوع اسم لا وإعرابه؟",
-                        hint: "الاسم مكون من كلمتين (لاعب كرة)، والثانية مجرورة.",
-                        isTF: false,
-                        choices: [
-                            { text: "مضاف - اسم لا منصوب بالفتحة.", correct: true },
-                            { text: "شبيه بالمضاف - اسم لا منصوب بالفتحة.", correct: false },
-                            { text: "مفرد - مبني على الفتح.", correct: false }
+                        type: "matching",
+                        q: "صل (اسم لا) لجمع المؤنث السالم بإعرابه الصحيح:",
+                        hint: "جمع المؤنث السالم ينصب وتكون علامة نصبه الكسرة.",
+                        pairs: [
+                            { right: "لا مهملاتِ ناجحاتٌ", left: "مبني على الكسر (مفرد)" },
+                            { right: "لا معلماتِ مدرسةٍ مقصراتٌ", left: "منصوب بالكسرة (مضاف)" },
+                            { right: "لا قائلاتٍ حقًا نادماتٌ", left: "منصوب بالكسرة (شبيه بالمضاف)" }
                         ],
-                        explanation: "القاعدة: اسم لا المضاف (كلمتان: الثانية مجرورة) يكون معربًا منصوبًا، وهنا نُصب بالفتحة."
-                    },
-                    {
-                        q: "عند تحويل الجملة السابقة لجمع المذكر لتصبح (لا لاعبي كرةٍ في الساحة)، إعراب كلمة (لاعبي):",
-                        hint: "المضاف تُحذف نونه عند الإضافة، ويُنصب بالياء إذا كان جمع مذكر سالمًا.",
-                        isTF: false,
-                        choices: [
-                            { text: "اسم لا منصوب بالياء وحُذفت النون للإضافة.", correct: true },
-                            { text: "اسم لا مبني على الياء.", correct: false },
-                            { text: "مضاف إليه مجرور بالياء.", correct: false }
-                        ],
-                        explanation: "القاعدة: المضاف منصوب، ولأنه جمع مذكر سالم نُصب بالياء، وحُذفت النون (التي في: لاعبين) بسبب الإضافة إلى كلمة (كرة)."
-                    },
-                    {
-                        q: "في جملة (لا طالبًا علمًا مقصرٌ)، إعراب كلمة (طالبًا):",
-                        hint: "الاسم منون وبعده كلمة تكمل معناه (علمًا).",
-                        isTF: false,
-                        choices: [
-                            { text: "اسم لا منصوب بالفتحة لأنه شبيه بالمضاف.", correct: true },
-                            { text: "اسم لا مبني على الفتح لأنه مفرد.", correct: false },
-                            { text: "اسم لا منصوب بالفتحة لأنه مضاف.", correct: false }
-                        ],
-                        explanation: "القاعدة: الشبيه بالمضاف يكون منصوبًا، وغالبًا ما يكون منونًا وبعده ما يكمل معناه."
-                    },
-                    {
-                        q: "عين نوع اسم لا وإعرابه في جملة (لا متقنين عملهم خاسرون):",
-                        hint: "لاحظ بقاء النون في (متقنين) ووجود كلمة بعدها تكمل المعنى.",
-                        isTF: false,
-                        choices: [
-                            { text: "شبيه بالمضاف - اسم لا منصوب بالياء.", correct: true },
-                            { text: "مضاف - اسم لا منصوب بالياء.", correct: false },
-                            { text: "مفرد - مبني على الياء.", correct: false }
-                        ],
-                        explanation: "القاعدة: الشبيه بالمضاف يُنصب بالياء في جمع المذكر السالم ولا تُحذف نونه، بل تبقى ليأتي بعدها ما يكمل المعنى."
+                        explanation: "(مهملاتِ) مفردة فبُنيت على الكسر. أما (معلماتِ) و(قائلاتٍ) فهما مضاف وشبيه بالمضاف على الترتيب وحكمهما النصب بالكسرة."
                     }
                 ]
             },
@@ -471,22 +419,15 @@
         ];
 
         /**
-         * 2. حالة التطبيق (State Management)
+         * 2. حالة التطبيق
          */
         let currentSectionIndex = 0;
-        // تخزين إجابات المستخدم: { sectionId: { questionIndex: true/false } }
         let userProgress = {}; 
-        
-        // الأرقام العربية للترقيم
         const arabicNumerals = ['١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', '١٠'];
 
-        /**
-         * 3. التهيئة الأساسية (Initialization)
-         */
         document.addEventListener('DOMContentLoaded', () => {
             initProgressObj();
             renderTabs();
-            // تمرير true لمنع التمرير التلقائي للأسفل عند بداية تحميل التطبيق
             loadSection(0, true);
             setupGlobalListeners();
         });
@@ -494,74 +435,40 @@
         function initProgressObj() {
             userProgress = {};
             courseData.forEach(sec => {
-                if (!sec.isSummary) {
-                    userProgress[sec.id] = {};
-                }
+                if (!sec.isSummary) userProgress[sec.id] = {};
             });
         }
 
-        /**
-         * 4. دوال التمرير الاحترافي (Scrolling Logic)
-         */
-        
-        // التمرير العمودي الناعم والآمن للمحتوى
         function smoothScrollToContent() {
             requestAnimationFrame(() => {
-                const contentArea = document.getElementById('content-area');
+                const scrollTarget = document.getElementById('main-lesson-title-container');
                 const stickyTabs = document.getElementById('sticky-tabs');
-                
-                if (!contentArea || !stickyTabs) return;
-
+                if (!scrollTarget || !stickyTabs) return;
                 const tabsHeight = stickyTabs.offsetHeight;
-                const rect = contentArea.getBoundingClientRect();
-                
-                // حساب المسافة بدقة مع إضافة هامش صغير 20px وطرح ارتفاع التبويبات الثابتة
+                const rect = scrollTarget.getBoundingClientRect();
                 const offsetPosition = rect.top + window.pageYOffset - tabsHeight - 20;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
             });
         }
 
-        // التمرير الأفقي الآمن للتبويبات (يتوافق مع RTL)
         function centerActiveTab() {
             requestAnimationFrame(() => {
                 const container = document.getElementById('tabs-container');
                 const activeTab = document.querySelector('.tab-btn.active-tab');
-                
                 if (!container || !activeTab) return;
-
-                // حساب موقع الزر بالنسبة للحاوية
                 const containerWidth = container.clientWidth;
                 const tabWidth = activeTab.clientWidth;
-                
-                // في RTL، المتصفحات تتعامل مع scrollLeft بطرق مختلفة.
-                // الطريقة الأكثر أمانًا هي حساب المسافة من اليمين.
-                // clientLeft أو offsetLeft قد تكون غير موثوقة في RTL، لكننا سنستخدم المنطق الرياضي لمركزة العنصر.
-                
                 const tabLeft = activeTab.offsetLeft;
                 const scrollPos = tabLeft - (containerWidth / 2) + (tabWidth / 2);
-
-                container.scrollTo({
-                    left: scrollPos,
-                    behavior: 'smooth'
-                });
+                container.scrollTo({ left: scrollPos, behavior: 'smooth' });
             });
         }
 
-        /**
-         * 5. بناء واجهة المستخدم (UI Rendering)
-         */
-        
         function renderTabs() {
             const tabsList = document.getElementById('tabs-list');
             tabsList.innerHTML = '';
-
             courseData.forEach((sec, index) => {
                 const li = document.createElement('li');
-                
                 li.innerHTML = `
                     <button onclick="loadSection(${index})" 
                             class="tab-btn px-5 py-2 rounded-full text-lg md:text-xl font-bold transition-all duration-300 whitespace-nowrap outline-none no-select flex items-center justify-center gap-1">
@@ -581,7 +488,6 @@
                 const isCompleted = isSectionCompleted(sec.id);
                 const iconContainer = btn.querySelector('.tab-icon-container');
                 
-                // إضافة علامة الصح فور اكتمال القسم (باستثناء قسم المقدمة)
                 if (isCompleted && !sec.isSummary) {
                     iconContainer.innerHTML = `
                         <svg class="w-5 h-5 text-emerald-500 fade-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
@@ -590,7 +496,7 @@
                         </svg>
                     `;
                 } else {
-                    iconContainer.innerHTML = ''; // إزالتها في حالة تصفير القسم أو إذا كان قسم مقدمة
+                    iconContainer.innerHTML = '';
                 }
 
                 if (index === currentSectionIndex) {
@@ -602,8 +508,6 @@
                 }
             });
             updateProgressBar();
-            
-            // استخدام setTimeout قصير لضمان تحديث DOM قبل التمرير الأفقي
             setTimeout(centerActiveTab, 50);
         }
 
@@ -619,13 +523,8 @@
                 const answered = Object.keys(userProgress[sec.id] || {}).length;
                 const percentage = (answered / total) * 100;
                 progressBar.style.width = `${percentage}%`;
-                
-                // تغيير اللون إذا اكتمل
-                if (percentage === 100) {
-                    progressBar.className = 'h-full transition-all duration-500 w-0 right-0 absolute bg-emerald-500';
-                } else {
-                    progressBar.className = 'h-full transition-all duration-500 w-0 right-0 absolute bg-amber-500';
-                }
+                if (percentage === 100) progressBar.className = 'h-full transition-all duration-500 w-0 right-0 absolute bg-emerald-500';
+                else progressBar.className = 'h-full transition-all duration-500 w-0 right-0 absolute bg-amber-500';
             }
         }
 
@@ -633,19 +532,13 @@
             currentSectionIndex = index;
             const section = courseData[index];
             
-            // تحديث العناوين
-            document.getElementById('section-title').textContent = section.title;
-            document.getElementById('section-subtitle').textContent = section.isSummary ? "مقدمة وتمهيد" : "أجب عن الأسئلة التالية لاختبار فهمك";
-            
             const contentArea = document.getElementById('content-area');
             const navButtons = document.getElementById('navigation-buttons');
             const finalArea = document.getElementById('final-result-area');
             
-            // إعادة ضبط الأنيميشن
             contentArea.classList.remove('fade-in');
-            void contentArea.offsetWidth; // Trigger reflow
+            void contentArea.offsetWidth; 
             contentArea.classList.add('fade-in');
-
             finalArea.classList.add('hidden');
 
             if (section.isSummary) {
@@ -654,31 +547,16 @@
             } else {
                 renderQuestions(section);
                 navButtons.classList.remove('hidden');
-                
-                // تحديث حالة زر القسم التالي
                 const btnNext = document.getElementById('btn-next');
-                if (index === courseData.length - 1) {
-                    btnNext.classList.add('hidden'); // إخفاء في القسم الأخير
-                } else {
-                    btnNext.classList.remove('hidden');
-                }
+                if (index === courseData.length - 1) btnNext.classList.add('hidden');
+                else btnNext.classList.remove('hidden');
             }
 
             updateTabsUI();
-            
-            // التمرير العمودي للمحتوى فقط إذا لم يتم منعه
-            if (!preventScroll) {
-                setTimeout(smoothScrollToContent, 50);
-            }
-            
+            if (!preventScroll) setTimeout(smoothScrollToContent, 50);
             checkGlobalCompletion();
         }
 
-        /**
-         * 6. منطق الأسئلة (Questions Logic)
-         */
-
-        // دالة خلط المصفوفات (Fisher-Yates)
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex !== 0) {
@@ -692,7 +570,6 @@
         function renderQuestions(section) {
             const contentArea = document.getElementById('content-area');
             contentArea.innerHTML = '';
-            
             const answeredState = userProgress[section.id] || {};
 
             section.questions.forEach((q, qIndex) => {
@@ -700,88 +577,175 @@
                 const isAnswered = answeredState.hasOwnProperty(qIndex);
                 const isCorrect = isAnswered ? answeredState[qIndex] : null;
 
-                // تحضير الاختيارات (خلط إذا لم تكن صح/خطأ، ولم تتم الإجابة بعد)
-                // نحتفظ بنفس ترتيب الخلط إذا أجاب الطالب حتى لا تتغير أماكنها أمامه
-                let displayChoices = [...q.choices];
+                const qCard = document.createElement('div');
+                qCard.className = `mb-12 transition-all duration-300`; 
                 
-                // ملاحظة: لتبسيط التطبيق والحفاظ على حالة الخلط دون تعقيد التخزين،
-                // سنقوم بخلطها فقط إذا لم يتم الرد، وإذا تم الرد سنرتبها بناء على ما تم حفظه لو أردنا حفظ الترتيب،
-                // لكن الأفضل تربويًا إعادة الخلط عند إعادة المحاولة فقط.
-                // هنا سنقوم بالخلط إذا لم تكن صح/خطأ.
-                if (!q.isTF) {
-                    // نستخدم seeded random بسيط أو ببساطة نخلطها دائمًا عند الريندر، 
-                    // وبما أن الريندر يحدث عند تغيير التبويب، فستتغير. هذا مطلوب لعدم الحفظ المكاني.
-                    displayChoices = shuffleArray(displayChoices);
+                // تحديد النص في الترويسة العلوية حسب نوع النشاط
+                let activityBadge = '';
+                if (q.type === 'word-hunter') {
+                    activityBadge = `<span class="text-blue-600 bg-blue-50 px-3 py-1 rounded-full text-base">صياد الكلمات 🎯</span>`;
+                } else if (q.type === 'card-sorting') {
+                    activityBadge = `<span class="text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full text-base">تصنيف البطاقات 🗂️</span>`;
+                } else if (q.type === 'matching') {
+                    activityBadge = `<span class="text-fuchsia-600 bg-fuchsia-50 px-3 py-1 rounded-full text-base">نشاط التوصيل 🔗</span>`;
                 }
 
-                // بناء كود HTML للسؤال
-                const qCard = document.createElement('div');
-                qCard.className = `mb-12 transition-all duration-300`; // تم إزالة الخلفية البيضاء من الحاوية الرئيسية لفصل العناصر
-                
                 let html = `
-                    <!-- صندوق السؤال -->
                     <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/30' : 'border-rose-300 bg-rose-50/30') : 'border-pastel-200'} mb-4">
-                        
-                        <!-- الترويسة العلوية للسؤال (رقم السؤال يمين + زر التلميح يسار) -->
                         <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-100">
-                            <span class="text-lg md:text-xl font-bold text-slate-500">السؤال ${arabicNumerals[qIndex]}</span>
+                            <span class="text-lg md:text-xl font-bold text-slate-500">السؤال ${arabicNumerals[qIndex]} ${activityBadge}</span>
                             <button onclick="toggleHint('${qId}')" class="flex items-center gap-1 text-amber-600 hover:text-amber-700 bg-amber-50 hover:bg-amber-100 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-colors border border-amber-200">
                                 <span>تلميح</span> <span class="text-lg">💡</span>
                             </button>
                         </div>
-
-                        <!-- نص السؤال -->
                         <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed">
                             ${q.q}
                         </h3>
                     </div>
                     
-                    <!-- صندوق نص التلميح -->
                     <div id="hint_${qId}" class="hidden mx-auto max-w-2xl w-full mb-6 bg-amber-100 text-amber-900 p-4 rounded-xl text-lg md:text-xl text-right border border-amber-200 fade-in shadow-sm">
                         <strong>💡 تلميح: </strong> ${q.hint}
                     </div>
-
-                    <!-- صندوق الاختيارات (مستقل عن السؤال) -->
-                    <div class="flex flex-col gap-3 mx-auto max-w-xl w-full">
                 `;
 
-                displayChoices.forEach((choice, cIndex) => {
-                    // الترقيم: لا ترقيم لصح/خطأ
-                    const numLabel = q.isTF ? '' : `<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold ml-3 text-lg flex-shrink-0">${arabicNumerals[cIndex]}</span>`;
+                // بناء واجهة الإجابات بناءً على نوع النشاط
+                if (q.type === 'word-hunter') {
+                    // واجهة لعبة "صياد الكلمات"
+                    html += `<div class="mx-auto max-w-2xl w-full text-center bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mb-6 leading-loose text-2xl md:text-3xl" dir="rtl">`;
                     
-                    // تحديد حالة الزر إذا كان مجاباً (تمت إضافة bg-white و shadow-sm لتبدو كصناديق منفصلة)
-                    let btnClass = "w-full text-right p-4 rounded-xl border-2 border-slate-200 bg-white shadow-sm text-xl md:text-2xl text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center cursor-pointer";
-                    
-                    let disabledAttr = isAnswered ? "disabled" : "";
-                    
-                    // إظهار الإجابة الصحيحة والخاطئة إذا كان السؤال مجاباً
-                    if (isAnswered) {
-                        btnClass = "w-full text-right p-4 rounded-xl border-2 text-xl md:text-2xl flex items-center cursor-default opacity-90 shadow-sm";
-                        if (choice.correct) {
-                            btnClass += " border-emerald-500 bg-emerald-100 text-emerald-900 font-bold";
+                    q.words.forEach((word, wIndex) => {
+                        let isCorrectWord = (wIndex === q.correctIndex);
+                        let btnClass = "inline-block mx-1 px-3 py-2 font-bold rounded-xl cursor-pointer transition-all duration-300 ";
+                        
+                        if (!isAnswered) {
+                            btnClass += "bg-slate-100 text-slate-700 hover:bg-blue-100 hover:text-blue-700 hover:-translate-y-1 shadow-sm";
                         } else {
-                            btnClass += " border-slate-200 bg-white text-slate-500";
+                            if (isCorrectWord) {
+                                btnClass += "bg-emerald-500 text-white shadow-md transform scale-110";
+                            } else {
+                                btnClass += "bg-slate-50 text-slate-300 cursor-default line-through";
+                            }
                         }
-                    }
-
-                    html += `
-                        <button ${disabledAttr} onclick="handleAnswer('${section.id}', ${qIndex}, ${choice.correct})" class="${btnClass}">
-                            ${numLabel}
-                            <span>${choice.text}</span>
-                        </button>
-                    `;
-                });
-
-                html += `</div>`; // إغلاق حاوية الاختيارات
-
-                // منطقة التغذية الراجعة والشرح (صندوق مستقل أسفل الاختيارات)
-                if (isAnswered) {
-                    const feedbackTitle = isCorrect ? '✅ إجابة صحيحة' : '❌ إجابة تحتاج مراجعة';
-                    const feedbackColor = isCorrect ? 'text-emerald-700 bg-emerald-100 border-emerald-200' : 'text-rose-700 bg-rose-100 border-rose-200';
+                        
+                        let disabledAttr = isAnswered ? "disabled" : "";
+                        html += `<button ${disabledAttr} onclick="handleAnswer('${section.id}', ${qIndex}, ${isCorrectWord})" class="${btnClass}">${word}</button> `;
+                    });
                     
+                    html += `</div>`;
+                } else if (q.type === 'card-sorting') {
+                    // واجهة لعبة "تصنيف البطاقات"
+                    html += `
+                        <div class="flex justify-center my-6 fade-in px-2">
+                            <div class="bg-indigo-50 border-4 border-indigo-200 text-indigo-900 px-8 py-10 rounded-3xl shadow-md text-2xl md:text-3xl font-bold text-center w-full max-w-lg relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-full h-3 bg-indigo-400"></div>
+                                <div class="absolute top-4 right-4 opacity-50 text-2xl">📌</div>
+                                ${q.cardText}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto max-w-4xl w-full mt-6">
+                    `;
+                    
+                    let displayChoices = [...q.choices];
+                    if (!q.isTF) displayChoices = shuffleArray(displayChoices);
+
+                    displayChoices.forEach((choice, cIndex) => {
+                        // تصميم صناديق الإسقاط (Bins)
+                        let btnClass = "w-full text-center p-5 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 shadow-sm text-xl md:text-2xl text-slate-700 hover:border-indigo-400 hover:bg-indigo-50 hover:border-solid hover:-translate-y-1 transition-all cursor-pointer font-bold";
+                        let disabledAttr = isAnswered ? "disabled" : "";
+                        
+                        if (isAnswered) {
+                            btnClass = "w-full text-center p-5 rounded-2xl border-2 border-solid text-xl md:text-2xl cursor-default opacity-90 shadow-sm font-bold";
+                            if (choice.correct) btnClass += " border-emerald-500 bg-emerald-100 text-emerald-900";
+                            else btnClass += " border-slate-200 bg-white text-slate-400 line-through";
+                        }
+
+                        html += `
+                            <button ${disabledAttr} onclick="handleAnswer('${section.id}', ${qIndex}, ${choice.correct})" class="${btnClass}">
+                                ${choice.text}
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    // واجهة لعبة "نشاط التوصيل"
+                    html += `<div class="mx-auto w-full max-w-4xl mt-6">`;
+                    
+                    let rightItems = q.pairs.map((p, i) => ({ text: p.right, pairId: i }));
+                    let leftItems = q.pairs.map((p, i) => ({ text: p.left, pairId: i }));
+                    
+                    if (isAnswered) {
+                        html += `<div class="flex flex-col gap-4">`;
+                        for(let i=0; i<rightItems.length; i++) {
+                            html += `
+                                <div class="flex flex-col md:flex-row gap-2 md:gap-4 items-stretch">
+                                    <div class="w-full md:w-1/2 p-4 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-900 font-bold text-center text-lg md:text-xl shadow-sm flex items-center justify-center min-h-[5rem]">
+                                        ${rightItems[i].text}
+                                    </div>
+                                    <div class="hidden md:flex items-center justify-center text-emerald-500 text-3xl">🔗</div>
+                                    <div class="flex md:hidden items-center justify-center text-emerald-500 text-3xl rotate-90">🔗</div>
+                                    <div class="w-full md:w-1/2 p-4 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-900 font-bold text-center text-lg md:text-xl shadow-sm flex items-center justify-center min-h-[5rem]">
+                                        ${leftItems[i].text}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        html += `</div>`;
+                    } else {
+                        rightItems = shuffleArray(rightItems);
+                        leftItems = shuffleArray(leftItems);
+                        
+                        html += `<div class="flex flex-col md:flex-row gap-4 md:gap-8 relative">`;
+                        
+                        html += `<div class="flex flex-col gap-4 w-full md:w-1/2">`;
+                        rightItems.forEach((rItem, i) => {
+                            html += `<button id="btn_${qId}_r_${i}" onclick="handleMatchSelection(this, 'right', '${qId}', ${rItem.pairId}, '${section.id}', ${qIndex}, ${q.pairs.length})" class="p-4 rounded-xl border-2 border-slate-300 bg-white text-slate-700 font-bold text-center text-lg md:text-xl shadow-sm hover:border-fuchsia-400 hover:bg-fuchsia-50 transition-all cursor-pointer min-h-[5rem] flex items-center justify-center leading-relaxed">${rItem.text}</button>`;
+                        });
+                        html += `</div>`;
+
+                        html += `<div class="flex flex-col gap-4 w-full md:w-1/2">`;
+                        leftItems.forEach((lItem, i) => {
+                            html += `<button id="btn_${qId}_l_${i}" onclick="handleMatchSelection(this, 'left', '${qId}', ${lItem.pairId}, '${section.id}', ${qIndex}, ${q.pairs.length})" class="p-4 rounded-xl border-2 border-slate-300 bg-white text-slate-700 font-bold text-center text-lg md:text-xl shadow-sm hover:border-fuchsia-400 hover:bg-fuchsia-50 transition-all cursor-pointer min-h-[5rem] flex items-center justify-center leading-relaxed">${lItem.text}</button>`;
+                        });
+                        html += `</div>`;
+                        
+                        html += `</div>`;
+                        
+                        if (!window.matchState) window.matchState = {};
+                        window.matchState[qId] = { right: null, left: null, matchedCount: 0 };
+                    }
+                    html += `</div>`;
+                } else {
+                    // واجهة الاختيار المتعدد الافتراضية
+                    let displayChoices = [...q.choices];
+                    if (!q.isTF) displayChoices = shuffleArray(displayChoices);
+
+                    html += `<div class="flex flex-col gap-3 mx-auto max-w-xl w-full">`;
+                    displayChoices.forEach((choice, cIndex) => {
+                        const numLabel = q.isTF ? '' : `<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 text-slate-600 font-bold ml-3 text-lg flex-shrink-0">${arabicNumerals[cIndex]}</span>`;
+                        let btnClass = "w-full text-right p-4 rounded-xl border-2 border-slate-200 bg-white shadow-sm text-xl md:text-2xl text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center cursor-pointer";
+                        let disabledAttr = isAnswered ? "disabled" : "";
+                        
+                        if (isAnswered) {
+                            btnClass = "w-full text-right p-4 rounded-xl border-2 text-xl md:text-2xl flex items-center cursor-default opacity-90 shadow-sm";
+                            if (choice.correct) btnClass += " border-emerald-500 bg-emerald-100 text-emerald-900 font-bold";
+                            else btnClass += " border-slate-200 bg-white text-slate-500";
+                        }
+
+                        html += `
+                            <button ${disabledAttr} onclick="handleAnswer('${section.id}', ${qIndex}, ${choice.correct})" class="${btnClass}">
+                                ${numLabel}
+                                <span>${choice.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+
+                // صندوق التغذية الراجعة
+                if (isAnswered) {
+                    const feedbackColor = isCorrect ? 'text-emerald-700 bg-emerald-100 border-emerald-200' : 'text-rose-700 bg-rose-100 border-rose-200';
                     html += `
                         <div class="mx-auto max-w-xl w-full mt-4 p-5 rounded-xl border ${feedbackColor} text-right fade-in shadow-sm">
-                            <h4 class="font-bold text-xl md:text-2xl mb-2">${feedbackTitle}</h4>
                             <p class="text-lg md:text-xl leading-relaxed">${q.explanation}</p>
                         </div>
                     `;
@@ -791,73 +755,109 @@
                 contentArea.appendChild(qCard);
             });
 
-            // عرض نتيجة القسم إذا اكتمل
-            if (isSectionCompleted(section.id)) {
-                showSectionResult(section);
-            }
+            if (isSectionCompleted(section.id)) showSectionResult(section);
         }
-
-        /**
-         * 7. التفاعل (Interactions & Events)
-         */
 
         function toggleHint(qId) {
             const hintDiv = document.getElementById(`hint_${qId}`);
-            if (hintDiv.classList.contains('hidden')) {
-                hintDiv.classList.remove('hidden');
-            } else {
-                hintDiv.classList.add('hidden');
+            if (hintDiv.classList.contains('hidden')) hintDiv.classList.remove('hidden');
+            else hintDiv.classList.add('hidden');
+        }
+
+        // دالة التحكم في نشاط التوصيل
+        window.handleMatchSelection = function(btn, side, qId, pairId, sectionId, qIndex, totalPairs) {
+            if (!window.matchState) window.matchState = {};
+            if (!window.matchState[qId]) window.matchState[qId] = { right: null, left: null, matchedCount: 0 };
+
+            let state = window.matchState[qId];
+
+            // إلغاء التحديد إذا تم النقر على نفس الزر
+            if (state[side] && state[side].btn === btn) {
+                btn.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
+                state[side] = null;
+                return;
+            }
+
+            // إزالة التحديد السابق من نفس العمود
+            if (state[side]) {
+                state[side].btn.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
+            }
+
+            // تحديد الزر الجديد
+            btn.classList.add('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
+            state[side] = { btn: btn, pairId: pairId };
+
+            // التحقق من التطابق عند اختيار زر من كل عمود
+            if (state.right && state.left) {
+                if (state.right.pairId === state.left.pairId) {
+                    // تطابق صحيح!
+                    [state.right.btn, state.left.btn].forEach(b => {
+                        b.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50', 'hover:border-fuchsia-400', 'hover:bg-fuchsia-50', 'cursor-pointer', 'border-slate-300');
+                        b.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'opacity-90');
+                        b.disabled = true;
+                    });
+
+                    state.matchedCount++;
+                    state.right = null;
+                    state.left = null;
+
+                    // إذا اكتملت جميع التوصيلات يتم إنهاء السؤال بنجاح
+                    if (state.matchedCount === totalPairs) {
+                        setTimeout(() => handleAnswer(sectionId, qIndex, true), 600);
+                    }
+                } else {
+                    // تطابق خاطئ!
+                    let rBtn = state.right.btn;
+                    let lBtn = state.left.btn;
+                    
+                    [rBtn, lBtn].forEach(b => {
+                        b.classList.remove('ring-4', 'ring-fuchsia-400', 'bg-fuchsia-50');
+                        b.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                    });
+
+                    state.right = null;
+                    state.left = null;
+
+                    // إزالة اللون الأحمر بعد ثانية للعودة للمحاولة
+                    setTimeout(() => {
+                        [rBtn, lBtn].forEach(b => {
+                            b.classList.remove('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                        });
+                    }, 600);
+                }
             }
         }
 
-        // دالة يتم استدعاؤها من واجهة المستخدم (onclick)
         window.handleAnswer = function(sectionId, qIndex, isCorrect) {
             if (!userProgress[sectionId]) userProgress[sectionId] = {};
-            
-            // تسجيل الإجابة
             userProgress[sectionId][qIndex] = isCorrect;
-            
-            // إعادة تصيير القسم لتحديث الواجهة مع منع التمرير للأعلى
             const secIndex = courseData.findIndex(s => s.id === sectionId);
             loadSection(secIndex, true); 
         }
 
-        // الانتقال للقسم التالي المبرمج في التبويبات
         window.goToNextSection = function() {
-            if (currentSectionIndex < courseData.length - 1) {
-                loadSection(currentSectionIndex + 1);
-            }
+            if (currentSectionIndex < courseData.length - 1) loadSection(currentSectionIndex + 1);
         }
 
         function setupGlobalListeners() {
-            document.getElementById('btn-next').addEventListener('click', () => {
-                goToNextSection();
-            });
-
+            document.getElementById('btn-next').addEventListener('click', () => goToNextSection());
             document.getElementById('btn-retry').addEventListener('click', () => {
                 const secId = courseData[currentSectionIndex].id;
-                userProgress[secId] = {}; // تصفير القسم
-                loadSection(currentSectionIndex); // إعادة التحميل
+                userProgress[secId] = {}; 
+                loadSection(currentSectionIndex, true); 
+                smoothScrollToContent(); // التمرير لأعلى القسم عند إعادة المحاولة
             });
-
             document.getElementById('btn-restart-all').addEventListener('click', () => {
                 initProgressObj();
-                renderTabs(); // تحديث وإزالة الأيقونات من التبويبات
-                loadSection(0, true); // العودة للمقدمة مع منع التمرير الافتراضي للقسم
-                
-                // التمرير السلس لأعلى الصفحة تماماً (للترويسة)
+                renderTabs(); 
+                loadSection(0, true); 
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-        /**
-         * 8. الحسابات والنتائج (Scoring & Completion)
-         */
-
         function isSectionCompleted(sectionId) {
             const sec = courseData.find(s => s.id === sectionId);
             if (sec.isSummary) return true;
-            
             const answered = Object.keys(userProgress[sectionId] || {}).length;
             return answered === sec.questions.length;
         }
@@ -881,12 +881,10 @@
                     <p class="text-xl md:text-2xl text-slate-700 font-medium">${msg}</p>
                 </div>
             `;
-            
             contentArea.insertAdjacentHTML('beforeend', resultHTML);
         }
 
         function checkGlobalCompletion() {
-            // التحقق مما إذا كانت جميع الأقسام التي تحتوي على أسئلة قد اكتملت
             const sectionsWithQuestions = courseData.filter(s => !s.isSummary);
             const allCompleted = sectionsWithQuestions.every(s => isSectionCompleted(s.id));
 
@@ -894,10 +892,7 @@
                 const finalArea = document.getElementById('final-result-area');
                 finalArea.classList.remove('hidden');
                 
-                // حساب المجموع الكلي
-                let totalCorrect = 0;
-                let totalQuestions = 0;
-                
+                let totalCorrect = 0, totalQuestions = 0;
                 sectionsWithQuestions.forEach(sec => {
                     const answers = Object.values(userProgress[sec.id]);
                     totalCorrect += answers.filter(v => v === true).length;
@@ -906,52 +901,30 @@
 
                 const percentage = (totalCorrect / totalQuestions) * 100;
                 
-                // عبارات تحفيزية متغيرة يتم اختيارها عشوائياً بناءً على النسبة
-                const msgs100 = [
-                    "أنت عبقري في النحو! لقد أتقنت درس (لا النافية للجنس) بشكل كامل. 👑",
-                    "علامة كاملة! أداء استثنائي يثبت تفوقك. 🏆",
-                    "مذهل! لا يوجد سؤال استعصى عليك، أنت أستاذ في هذا الدرس! 🌟"
-                ];
-                const msgs80 = [
-                    "رائع جدًا! مستوى متقدم وفهم عميق للقاعدة. استمر! 🌟",
-                    "ممتاز! تقترب من الكمال، مجرد هفوات بسيطة. 👍",
-                    "أداء قوي جدًا! أنت تملك ناصية النحو. 👏"
-                ];
-                const msgs60 = [
-                    "جهد طيب! لقد فهمت الأساسيات، وقليل من المراجعة سيجعلك متمكنًا. 📚",
-                    "جيد! أنت على الطريق الصحيح، واصل التدريب. 🛤️",
-                    "لا بأس! تحتاج لبعض التركيز الإضافي لتصل للقمة. 🧗"
-                ];
-                const msgsLow = [
-                    "لا تقلق، النحو يحتاج إلى تدريب مستمر. حاول مرة أخرى وستلاحظ التحسن! 💪",
-                    "كل خطأ هو فرصة للتعلم! أعد المحاولة وستتجاوزها. 🔄",
-                    "البدايات قد تكون صعبة، لكن الاستمرار يصنع النجاح! 🌱"
-                ];
+                const msgs100 = ["أنت عبقري في النحو! لقد أتقنت درس (لا النافية للجنس) بشكل كامل. 👑", "علامة كاملة! أداء استثنائي يثبت تفوقك. 🏆", "مذهل! لا يوجد سؤال استعصى عليك، أنت أستاذ في هذا الدرس! 🌟"];
+                const msgs80 = ["رائع جدًا! مستوى متقدم وفهم عميق للقاعدة. استمر! 🌟", "ممتاز! تقترب من الكمال، مجرد هفوات بسيطة. 👍", "أداء قوي جدًا! أنت تملك ناصية النحو. 👏"];
+                const msgs60 = ["جهد طيب! لقد فهمت الأساسيات، وقليل من المراجعة سيجعلك متمكنًا. 📚", "جيد! أنت على الطريق الصحيح، واصل التدريب. 🛤️", "لا بأس! تحتاج لبعض التركيز الإضافي لتصل للقمة. 🧗"];
+                const msgsLow = ["لا تقلق، النحو يحتاج إلى تدريب مستمر. حاول مرة أخرى وستلاحظ التحسن! 💪", "كل خطأ هو فرصة للتعلم! أعد المحاولة وستتجاوزها. 🔄", "البدايات قد تكون صعبة، لكن الاستمرار يصنع النجاح! 🌱"];
 
-                let finalMsg = "";
-                if (percentage === 100) finalMsg = msgs100[Math.floor(Math.random() * msgs100.length)];
-                else if (percentage >= 80) finalMsg = msgs80[Math.floor(Math.random() * msgs80.length)];
-                else if (percentage >= 60) finalMsg = msgs60[Math.floor(Math.random() * msgs60.length)];
-                else finalMsg = msgsLow[Math.floor(Math.random() * msgsLow.length)];
+                let finalMsg = percentage === 100 ? msgs100[Math.floor(Math.random() * msgs100.length)] : 
+                               percentage >= 80 ? msgs80[Math.floor(Math.random() * msgs80.length)] : 
+                               percentage >= 60 ? msgs60[Math.floor(Math.random() * msgs60.length)] : 
+                               msgsLow[Math.floor(Math.random() * msgsLow.length)];
 
                 document.getElementById('final-message').textContent = finalMsg;
                 document.getElementById('final-score-text').textContent = `${totalCorrect} / ${totalQuestions}`;
                 
-                // التمرير إلى النتيجة النهائية
                 setTimeout(() => {
                     requestAnimationFrame(() => {
                         const stickyTabs = document.getElementById('sticky-tabs');
                         const tabsHeight = stickyTabs ? stickyTabs.offsetHeight : 0;
                         const rect = finalArea.getBoundingClientRect();
-                        
-                        // طرح ارتفاع التبويبات الثابتة حتى لا تُغطي النتيجة
                         const offsetPosition = rect.top + window.pageYOffset - tabsHeight - 20;
                         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     });
                 }, 300);
             }
         }
-
     </script>
 </body>
 </html>
