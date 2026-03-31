@@ -433,9 +433,13 @@
 
         const arabicNumerals = ['١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', '١٠'];
 
-        // منع المتصفح من الاحتفاظ بموضع التمرير عند تحديث الصفحة
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
+        // منع المتصفح من الاحتفاظ بموضع التمرير عند تحديث الصفحة (محمي للبيئات المعزولة)
+        try {
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'manual';
+            }
+        } catch (e) {
+            // تجاهل الخطأ في حال كانت البيئة (Iframe) تمنع الوصول للـ history
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -637,11 +641,9 @@
                     <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border ${isAnswered ? (isCorrect ? 'border-emerald-300 bg-emerald-50/20' : 'border-rose-300 bg-rose-50/20') : 'border-pastel-200'} mb-4 transition-colors duration-300">
                         
                         <!-- الترويسة العلوية: رقم السؤال والتلميح -->
-                        <div class="flex justify-between items-center mb-5 pb-4 border-b border-slate-100">
+                        <div class="flex justify-between items-center mb-3">
                             <div class="flex items-center gap-3">
-                                <span class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 text-slate-700 font-bold text-xl md:text-2xl shadow-sm border border-slate-200">
-                                    ${arabicNumerals[qIndex]}
-                                </span>
+                                <span class="inline-flex items-center justify-center px-4 py-1.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xl md:text-2xl shadow-sm border border-slate-200">السؤال ${arabicNumerals[qIndex]}</span>
                                 ${activityBadge}
                             </div>
                             <button onclick="toggleHint('${qId}')" class="flex items-center gap-1 text-amber-500 hover:text-amber-600 bg-amber-50 hover:bg-amber-100 px-4 py-2 rounded-full text-xl font-bold transition-colors border border-amber-200 shadow-sm">
@@ -649,13 +651,11 @@
                             </button>
                         </div>
                         
-                        <!-- نص السؤال -->
-                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-relaxed mb-4">
-                            ${q.q}
-                        </h3>
+                        <!-- نص السؤال: تم إزالة الهامش السفلي mb-0 لتقليل الفراغ الزائد داخل الصندوق -->
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-800 text-right leading-snug mb-0">${q.q}</h3>
                         
-                        <!-- صندوق التلميح (تم إزالة fade-opacity من هنا لمنع الوميض عند الإجابة) -->
-                        <div id="hint_${qId}" class="${hintHiddenClass} bg-amber-50 text-amber-900 p-4 rounded-xl text-xl md:text-2xl text-right border border-amber-200 shadow-sm mb-2">
+                        <!-- صندوق التلميح: تم نقل الهامش ليكون بالجهة العلوية mt-4 -->
+                        <div id="hint_${qId}" class="${hintHiddenClass} bg-amber-50 text-amber-900 p-4 rounded-xl text-xl md:text-2xl text-right border border-amber-200 shadow-sm mt-4 mb-0">
                             <strong>💡 تلميح: </strong> ${q.hint}
                         </div>
                     </div>
@@ -913,15 +913,29 @@
 
         function setupGlobalListeners() {
             document.getElementById('btn-next').addEventListener('click', () => goToNextSection());
+            
             document.getElementById('btn-retry').addEventListener('click', () => {
                 const secId = courseData[currentSectionIndex].id;
                 userProgress[secId] = {}; 
                 shuffleSectionQuestions(courseData[currentSectionIndex]); // خلط جديد عند النقر على إعادة المحاولة
+                
+                // تصفير حالة التوصيل للقسم الحالي حتى يعمل التوصيل مجدداً
+                if (window.matchState) {
+                    courseData[currentSectionIndex].questions.forEach((q, qIndex) => {
+                        const qId = `q_${secId}_${qIndex}`;
+                        if (window.matchState[qId]) {
+                            window.matchState[qId] = { right: null, left: null, matchedCount: 0 };
+                        }
+                    });
+                }
+
                 loadSection(currentSectionIndex, true); 
                 smoothScrollToContent(); 
             });
+
             document.getElementById('btn-restart-all').addEventListener('click', () => {
                 initProgressObj();
+                window.matchState = {}; // تصفير شامل لجميع حالات التوصيل
                 renderTabs(); 
                 loadSection(0, true); 
                 window.scrollTo({ top: 0, behavior: 'smooth' });
